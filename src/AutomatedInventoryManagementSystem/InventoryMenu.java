@@ -1,11 +1,11 @@
 package AutomatedInventoryManagementSystem;
 
-// includes the java swing gui
-
-public class LoginMenu {
+public class InventoryMenu {
 	
 	// --- Three Horizontal Dots ---
 	// add action listener if the button has been pressed do:
 	// show Back -> 
+	// show Logout -> logout();
 	// show Exit -> exits the application
+
 }
