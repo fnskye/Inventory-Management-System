@@ -2,10 +2,11 @@
 
 ### You only have to do this step ONCE to get the project on your computer
 
-[Download Java IDE Eclipse Here](https://www.eclipse.org/downloads/)
+[Download Java IDE Eclipse](https://www.eclipse.org/downloads/)
 
 **Step 1: Download and Open Git Bash**
-[Download Git Bash Here](https://git-scm.com/install/)
+
+[Download Git Bash](https://git-scm.com/install/)
 
 Once installation is done open Git Bash
 
