@@ -22,7 +22,7 @@ Then make sure you are logged in on GitHub and let the Authentication Succeeded.
 
 Once Done
 
-**Step 2 Open Eclipse**
+**Step 2: Open Eclipse**
 
 Go to File > Import
 
@@ -30,4 +30,7 @@ Select General > Existing Projects into Workspace and click Next.
 
 Click Browse, select the 'AutomatedInventoryManagementSystem' folder that Git just downloaded, and click Finish.
 
-Done.
+**Step 3: Setup the Database**
+
+Right Click the 'AutomatedInventoryManagementSystem' folder > Properties > Java Build Path > Libraries > Then add your SQLite to the Classpath ```sqlite-jdbc-3.51.3.0.jar```.
+Click Apply and Close > Restart your Eclipse
