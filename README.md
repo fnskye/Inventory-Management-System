@@ -1,4 +1,4 @@
-## How to Use the Source Code to Use it on eclipse
+## How to Setup and Use the Source Code
 
 ### You only have to do this step ONCE to get the project on your computer:
 
@@ -9,7 +9,7 @@ Step 2 --> Open Git Bash
 -> Copy and paste this exact command to download our code:
 
 Bash
-git clone https://github.com/fnskye/Inventory-Management-System/
+git clone "https://github.com/fnskye/Inventory-Management-System/"
 
 Step 2 --> Open Eclipse
 
