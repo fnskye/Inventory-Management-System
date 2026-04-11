@@ -1,4 +1,4 @@
-package AutomatedInventoryManagementSystem;
+package Module;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import Database.*;
+import Main.*;
 
 public class MainMenu extends JFrame {
 
@@ -36,7 +39,7 @@ public class MainMenu extends JFrame {
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
-		setJMenuBar(Dropdown.createTopMenu(true, this));
+		setJMenuBar(Dropdown.createTopMenu(true, username, this));
 
 		// Center Panel Setup
 		JPanel centerPanel = new JPanel();

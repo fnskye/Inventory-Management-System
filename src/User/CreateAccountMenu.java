@@ -1,5 +1,6 @@
-package AutomatedInventoryManagementSystem;
+package User;
 
+// includes action listener for buttons
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -7,11 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+// includes database connection
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-//includes the java swing gui
+// includes the java swing gui
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -22,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+
+import Database.InitializeDatabase;
 
 public class CreateAccountMenu extends JDialog {
 	// Add default serial version ID
@@ -156,7 +160,7 @@ public class CreateAccountMenu extends JDialog {
 
 		String sql = "INSERT INTO Users (username, password) VALUES (?, ?)";
 
-		try (Connection connection = Database.getConnection();
+		try (Connection connection = InitializeDatabase.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
 			preparedStatement.setString(1, newUsername);

@@ -1,9 +1,12 @@
-package AutomatedInventoryManagementSystem;
+package Main;
 
+import Module.*;
+import Database.*;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class OverallSystem {
+
+public class Main {
 	// Global User Tracker
 	public static String currentUser = null;
 
@@ -16,7 +19,7 @@ public class OverallSystem {
 		Thread.sleep(1500);
 
 		// Initialize and read the database
-		Database.initializeDatabase();
+		InitializeDatabase.initializeDatabase();
 		Thread.sleep(1500);
 
 		System.out.println("\nCalling Login Module...");

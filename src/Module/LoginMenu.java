@@ -1,5 +1,6 @@
-package AutomatedInventoryManagementSystem;
+package Module;
 
+// includes action listener for buttons
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// includes the java swing gui
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+// include classes outside the package
+import Database.InitializeDatabase;
+import Main.Main;
 
 public class LoginMenu extends JFrame {
 	private static final long serialVersionUID = 1L; // Add default serial version ID
@@ -36,8 +42,8 @@ public class LoginMenu extends JFrame {
 		setLocationRelativeTo(null); // Centers the window on the screen
 		setLayout(new BorderLayout());
 
-		// False because no one is logged in yet
-		setJMenuBar(Dropdown.createTopMenu(false, this));
+		// Sets to false because no one is logged in yet
+		setJMenuBar(Dropdown.createTopMenu(false, null, this));
 
 		// Center the Form Panel
 		JPanel formPanel = new JPanel();
@@ -144,7 +150,7 @@ public class LoginMenu extends JFrame {
 									JOptionPane.INFORMATION_MESSAGE);
 
 							System.out.println("\nCalling Main Menu Module...");
-							OverallSystem.openMainMenu(username, LoginMenu.this);
+							Main.openMainMenu(username, LoginMenu.this);
 						} else {
 							System.out.println("\nLogin Error.");
 							JOptionPane.showMessageDialog(LoginMenu.this, "Invalid Username or Password.", "Login",
@@ -161,7 +167,7 @@ public class LoginMenu extends JFrame {
 			// Checking the user in the database
 			private boolean authenticateUser(String enteredUsername, String enteredPassword) {
 				String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
-				try (java.sql.Connection connection = Database.getConnection();
+				try (java.sql.Connection connection = InitializeDatabase.getConnection();
 						java.sql.PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
 
 					preparedstatement.setString(1, enteredUsername);

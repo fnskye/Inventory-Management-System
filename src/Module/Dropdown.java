@@ -1,10 +1,14 @@
-package AutomatedInventoryManagementSystem;
+package Module;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import Main.Main;
+import User.CreateAccountMenu;
+import User.RemoveAccountMenu;
 
 public class Dropdown {
 
@@ -23,7 +27,7 @@ public class Dropdown {
 	}
 
 	// Dropdown Menu System (might improve in the future)
-	public static JMenuBar createTopMenu(boolean isLoggedIn, JFrame currentScreen) {
+	public static JMenuBar createTopMenu(boolean isLoggedIn, String username, JFrame currentScreen) {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu optionsMenu = new JMenu("≡ Menu");
 
@@ -32,10 +36,23 @@ public class Dropdown {
 			JMenuItem createAccountItem = new JMenuItem("Create Account");
 			createAccountItem.addActionListener(e -> {
 				// Opens the Create Account window
-				CreateAccountMenu create = new CreateAccountMenu(currentScreen);
-				create.setVisible(true);
+				CreateAccountMenu createacc = new CreateAccountMenu(currentScreen);
+				createacc.setVisible(true);
 			});
 			optionsMenu.add(createAccountItem);
+
+			// --- Remove Account Button (for admin only) ---
+			if (username.equalsIgnoreCase("admin")) {
+				// --- Remove Account Button ---
+				JMenuItem removeAccountItem = new JMenuItem("Remove Account");
+				removeAccountItem.addActionListener(e -> {
+					// Opens the Remove Account Window
+					RemoveAccountMenu removeacc = new RemoveAccountMenu(username, currentScreen);
+					removeacc.setVisible(true);
+				});
+				optionsMenu.add(removeAccountItem);
+				;
+			}
 
 			// --- Logout Button ---
 			JMenuItem logoutItem = new JMenuItem("Logout");
@@ -44,7 +61,7 @@ public class Dropdown {
 				int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Confirm",
 						JOptionPane.YES_NO_OPTION);
 				if (confirmation == JOptionPane.YES_OPTION) {
-					OverallSystem.logout(currentScreen);
+					Main.logout(currentScreen);
 				}
 			});
 			optionsMenu.add(logoutItem);
