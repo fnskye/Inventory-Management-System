@@ -16,7 +16,7 @@ Once installation is done open Git Bash
 
 -> Copy and paste this exact command to download our code
 
-```git clone "https://github.com/fnskye/Inventory-Management-System/"```
+```git clone "https://github.com/fnskye/Inventory-Management-System/" AutomatedInventoryManagementSystem```
 
 Then make sure you are logged in on GitHub and let the Authentication Succeeded.
 
