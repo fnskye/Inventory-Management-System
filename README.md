@@ -34,4 +34,6 @@ Click Browse, select the 'AutomatedInventoryManagementSystem' folder that Git ju
 
 Right Click the 'AutomatedInventoryManagementSystem' folder > Properties > Java Build Path > Libraries > Then add your SQLite to the Classpath ```sqlite-jdbc-3.51.3.0.jar```.
 
+```sqlite-jdbc-3.51.3.0.jar``` is located in `AutomatedInventoryManagementSystem\lib`
+
 Click Apply and Close > Restart your `Eclipse`
