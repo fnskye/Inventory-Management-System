@@ -6,11 +6,15 @@
 
 -> Navigate to your Eclipse workspace folder. Type ```cd``` with a space, then drag your workspace folder from your files directly into the terminal and hit enter.
 
-```cd "C:\Users\User\eclipse-workspace"```
+```cd "C:{path of your eclipse}\eclipse-workspace"```
 
 -> Copy and paste this exact command to download our code
 
 ```git clone "https://github.com/fnskye/Inventory-Management-System/"```
+
+Then make sure you are logged in on GitHub and let the Authentication Succeeded.
+
+Once Done
 
 **Step 2 --> Open Eclipse**
 
