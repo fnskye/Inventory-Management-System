@@ -21,9 +21,15 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import Database.InitializeDatabase;
 
 public class RemoveAccountMenu extends JDialog {
+
+	private static final Logger logger = LogManager.getLogger(RemoveAccountMenu.class);
+
 	// Add default serial version ID
 	private static final long serialVersionUID = 1L;
 
@@ -128,6 +134,7 @@ public class RemoveAccountMenu extends JDialog {
 		removeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Calling remove user...");
 				removeUser(username);
 			}
 		});
@@ -137,48 +144,74 @@ public class RemoveAccountMenu extends JDialog {
 		String oldUsername = usernameField.getText();
 		String confirmOldUsername = new String(confirmUsernameField.getText());
 
+		// Checks if Username and Confirm Username Field are empty
 		if (oldUsername.isEmpty() || confirmOldUsername.isEmpty()) {
 			textLabel.setForeground(Color.RED);
 			textLabel.setText("Please fill in all fields.");
+			logger.info("Please fill in all fields.");
 			return;
 		}
 
+		// Checks if Username is not equal to Confirm Username
 		if (!oldUsername.equals(confirmOldUsername)) {
 			return;
 		}
 
+		// Checks for Field if user tries to delete 'current user'
 		if (oldUsername.equals(username) && !oldUsername.equalsIgnoreCase("admin")) {
 			textLabel.setForeground(Color.RED);
 			textLabel.setText("Cannot Delete Current Logged In User.");
+			logger.info("Please fill in all fields.");
 			return;
 		}
 
+		// Checks for Field if user tries to delete 'admin'
 		if (oldUsername.equalsIgnoreCase("admin")) {
 			textLabel.setForeground(Color.RED);
 			textLabel.setText("Cannot delete the admin account.");
-			System.out.println("\nCannot delete the admin account.");
+			logger.info("Cannot delete the admin account.");
 			return;
 		}
 
 		String sql = "DELETE FROM Users WHERE username = ?";
 
+		logger.info("Connecting to Database");
 		try (java.sql.Connection connection = InitializeDatabase.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+			// Initialize the show message dialog
+			boolean showDialog = false;
+
+			// Replace the first '?' with the value of oldUsername
 			preparedStatement.setString(1, oldUsername);
 
+			// Checks for rows if the TABLE got affected
 			int rowsAffected = preparedStatement.executeUpdate();
 
+			// Condition for update status for console logs
 			String updateStatus = (rowsAffected > 0) ? "success" : "failed";
 
-			System.out.println("Remove Update " + "for " + oldUsername + " " + updateStatus);
+			if (updateStatus.equals("success")) {
+				showDialog = true;
+			}
+			if (updateStatus.equals("failed")) {
+				showDialog = false;
+			}
 
-			textLabel.setForeground(lightGreen);
-			JOptionPane.showMessageDialog(RemoveAccountMenu.this, "Removed: " + oldUsername);
-			dispose();
+			// Prints the update for console logs
+			logger.info("Remove Update " + "for " + oldUsername + " " + updateStatus);
 
+			// Condition to show message dialog
+			if (showDialog) {
+				JOptionPane.showMessageDialog(RemoveAccountMenu.this, "Removed: " + oldUsername);
+				logger.info("Successfully Removed " + oldUsername);
+				dispose();
+			} else {
+				JOptionPane.showMessageDialog(RemoveAccountMenu.this, oldUsername + " Account Not Found.");
+				logger.info(oldUsername + " Account Not Found");
+			}
 		} catch (java.sql.SQLException ex) {
-			System.out.println("Database deletion error: " + ex.getMessage());
+			logger.error("Database deletion error: " + ex.getMessage());
 		}
 	}
 }

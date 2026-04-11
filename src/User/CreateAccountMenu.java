@@ -25,9 +25,15 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import Database.InitializeDatabase;
 
 public class CreateAccountMenu extends JDialog {
+
+	private static final Logger logger = LogManager.getLogger(CreateAccountMenu.class);
+
 	// Add default serial version ID
 	private static final long serialVersionUID = 1L;
 
@@ -138,6 +144,7 @@ public class CreateAccountMenu extends JDialog {
 		registerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Calling Register...");
 				registerNewUser();
 			}
 		});
@@ -148,12 +155,15 @@ public class CreateAccountMenu extends JDialog {
 		String newPassword = new String(passwordField.getPassword());
 		String confirmPassword = new String(confirmPasswordField.getPassword());
 
+		// Checks if Username and Confirm Username Field are empty
 		if (newUsername.isEmpty() || newPassword.isEmpty()) {
 			textLabel.setForeground(Color.RED);
 			textLabel.setText("Please fill in all fields.");
+			logger.info("Please fill in all fields.");
 			return;
 		}
 
+		// Checks if Password is not equal to Confirm Password
 		if (!newPassword.equals(confirmPassword)) {
 			return;
 		}
@@ -163,12 +173,15 @@ public class CreateAccountMenu extends JDialog {
 		try (Connection connection = InitializeDatabase.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+			// Initialize the first and second parameter index '?'
 			preparedStatement.setString(1, newUsername);
 			preparedStatement.setString(2, newPassword);
 			preparedStatement.executeUpdate();
 
+			// Show message dialog for New Account Created
 			textLabel.setForeground(lightGreen);
 			JOptionPane.showMessageDialog(CreateAccountMenu.this, "New Account Created: " + newUsername);
+			logger.info("Success Creating Account.");
 			dispose();
 
 		} catch (SQLException ex) {
@@ -177,9 +190,11 @@ public class CreateAccountMenu extends JDialog {
 					|| ex.getMessage().contains("SQLITE_CONSTRAINT_UNIQUE")) {
 				textLabel.setForeground(Color.RED);
 				textLabel.setText("Username already exists. Choose another.");
+				logger.info("Username already exists. Choose another.");
 			} else {
 				JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error",
 						JOptionPane.ERROR_MESSAGE);
+				logger.error("Database Error: " + ex.getMessage());
 			}
 		}
 	}

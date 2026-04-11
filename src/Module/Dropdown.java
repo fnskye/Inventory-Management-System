@@ -6,11 +6,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import Main.Main;
 import User.CreateAccountMenu;
 import User.RemoveAccountMenu;
 
 public class Dropdown {
+
+	private static final Logger logger = LogManager.getLogger(Dropdown.class);
 
 	// Universal Exit Button
 	public static JMenuItem createExitMenuItem() {
@@ -19,7 +24,7 @@ public class Dropdown {
 			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Confirm",
 					JOptionPane.YES_NO_OPTION);
 			if (confirmation == JOptionPane.YES_OPTION) {
-				System.out.println("\nExiting...");
+				logger.info("\nExiting...");
 				System.exit(0);
 			}
 		});
@@ -37,6 +42,7 @@ public class Dropdown {
 			createAccountItem.addActionListener(e -> {
 				// Opens the Create Account window
 				CreateAccountMenu createacc = new CreateAccountMenu(currentScreen);
+				logger.info("Opening Create Account Menu...");
 				createacc.setVisible(true);
 			});
 			optionsMenu.add(createAccountItem);
@@ -48,6 +54,7 @@ public class Dropdown {
 				removeAccountItem.addActionListener(e -> {
 					// Opens the Remove Account Window
 					RemoveAccountMenu removeacc = new RemoveAccountMenu(username, currentScreen);
+					logger.info("Opening Remove Account Menu...");
 					removeacc.setVisible(true);
 				});
 				optionsMenu.add(removeAccountItem);
@@ -61,6 +68,7 @@ public class Dropdown {
 				int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Confirm",
 						JOptionPane.YES_NO_OPTION);
 				if (confirmation == JOptionPane.YES_OPTION) {
+					logger.debug("Disposing Current Screen");
 					Main.logout(currentScreen);
 				}
 			});

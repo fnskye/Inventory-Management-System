@@ -1,32 +1,50 @@
 package Main;
 
-import Module.*;
-import Database.*;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import Database.InitializeDatabase;
+import Module.LoginMenu;
+import Module.MainMenu;
 
 public class Main {
 	// Global User Tracker
 	public static String currentUser = null;
 
-	public static void main(String[] args) throws InterruptedException {
-		// --- Main Module ---
-		System.out.println("--- Logs will be monitored at the console ---");
-		Thread.sleep(2500);
+	// Initialize the logger for this specific class
+	private static final Logger logger = LogManager.getLogger(Main.class);
 
-		System.out.println("\nInitializing...\n");
+	public static void main(String[] args) throws InterruptedException {
+		// --- Main Module + Logger Module ---
 		Thread.sleep(1500);
+		logger.info("---------------------------------------------");
+		logger.info("|   Inventory System Started Successfully   |");
+		logger.info("---------------------------------------------");
+
+		try {
+			Thread.sleep(1500);
+			logger.info("Attempting to connect to the database...");
+			Thread.sleep(300);
+			logger.info("Initializing...");
+			InitializeDatabase.initializeDatabase();
+
+		} catch (Exception e) {
+			logger.error("CRITICAL: Failed to load database.", e);
+		}
 
 		// Initialize and read the database
-		InitializeDatabase.initializeDatabase();
+
 		Thread.sleep(1500);
 
-		System.out.println("\nCalling Login Module...");
+		logger.info("Calling Login Module...");
 		Thread.sleep(1500);
 
 		// Launch the Login Menu without interruption with thread sleep
 		SwingUtilities.invokeLater(() -> {
+			logger.info("Initializing...");
 			openLoginMenu();
 		});
 	}
@@ -36,6 +54,7 @@ public class Main {
 		// --- Open Login Menu when called ---
 		LoginMenu login = new LoginMenu();
 
+		logger.info("Opening Login Module...");
 		login.setVisible(true); // Make it visible
 
 		login.setAlwaysOnTop(true); // Temporarily pin then unpin it
@@ -43,6 +62,7 @@ public class Main {
 
 		login.toFront(); // The window come to the front
 		login.requestFocus(); // Grab the keyboard focus
+		logger.debug("Success Opening Login Menu.");
 	}
 
 	// --- Global Open Main Menu ---
@@ -60,13 +80,14 @@ public class Main {
 		// Open the Main Menu and pass the logged in username
 		MainMenu mainMenu = new MainMenu(username);
 		mainMenu.setVisible(true);
+		logger.info("Success Opening Main Menu.");
 	}
 
 	// --- Global Logout ---
 	public static void logout(JFrame currentScreen) {
 
 		currentUser = null; // Wipe the Data (important when logging out)
-		System.out.println("\nLogging Out...");
+		logger.info("Logging Out...");
 
 		// Show the Logging Out... Dialog
 		javax.swing.JDialog logoutDialog = new javax.swing.JDialog(currentScreen, "Logging Out", true);
@@ -85,10 +106,12 @@ public class Main {
 
 			if (currentScreen != null) {
 				currentScreen.dispose(); // Close the Current Menu
+				logger.info("Success Logging Out.");
 			}
 
-			System.out.println("\nCalling Login Module...");
+			logger.info("Calling Login Module...");
 			openLoginMenu(); // Reopen the Login Menu after logging out
+			logger.info("Opened Login Module.");
 		});
 
 		timer.setRepeats(false);

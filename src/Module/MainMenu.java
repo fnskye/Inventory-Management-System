@@ -16,10 +16,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import Database.*;
-import Main.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MainMenu extends JFrame {
+
+	private static final Logger logger = LogManager.getLogger(MainMenu.class);
 
 	// --- Tentative Main Menu (might change in the future) ---
 
@@ -30,8 +32,10 @@ public class MainMenu extends JFrame {
 	private String loggedInUser;
 
 	public MainMenu(String username) {
+		logger.info("Checking User...");
 		this.loggedInUser = username;
 
+		logger.info("User Identified: " + this.loggedInUser);
 		// Setup the Main Window
 		setTitle("Main Menu");
 		setSize(600, 450);
@@ -92,6 +96,7 @@ public class MainMenu extends JFrame {
 		inventoryButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Clicked Inventory Menu...");
 				simulateLoading("Inventory");
 			}
 		});
@@ -99,6 +104,7 @@ public class MainMenu extends JFrame {
 		orderButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Clicked Order Menu...");
 				simulateLoading("Order");
 			}
 		});
@@ -106,6 +112,7 @@ public class MainMenu extends JFrame {
 		salesReportButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				logger.info("Clicked Sales Report...");
 				simulateLoading("Sales Report");
 			}
 		});
@@ -119,7 +126,6 @@ public class MainMenu extends JFrame {
 		loadingDialog.setLocationRelativeTo(this);
 		loadingDialog.setDefaultCloseOperation(javax.swing.JDialog.DO_NOTHING_ON_CLOSE);
 
-		System.out.println("\nOpening " + moduleName + " Module...");
 		javax.swing.JLabel loadingLabel = new javax.swing.JLabel("Opening " + moduleName + " Module...",
 				SwingConstants.CENTER);
 		loadingDialog.add(loadingLabel, BorderLayout.CENTER);
@@ -127,6 +133,7 @@ public class MainMenu extends JFrame {
 		javax.swing.Timer timer = new javax.swing.Timer(1500, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent evt) {
+				logger.info("Opening " + moduleName + " Module...");
 				loadingDialog.dispose();
 
 				// --- Might Improve Soon when there is Inventory, Order, Sales Report ----

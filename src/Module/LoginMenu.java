@@ -22,11 +22,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 // include classes outside the package
 import Database.InitializeDatabase;
 import Main.Main;
 
 public class LoginMenu extends JFrame {
+
+	private static final Logger logger = LogManager.getLogger(LoginMenu.class);
+
 	private static final long serialVersionUID = 1L; // Add default serial version ID
 
 	// Initialization of variables
@@ -132,7 +138,7 @@ public class LoginMenu extends JFrame {
 				loadingDialog.setLocationRelativeTo(LoginMenu.this);
 				loadingDialog.setDefaultCloseOperation(javax.swing.JDialog.DO_NOTHING_ON_CLOSE);
 
-				System.out.println("\nLogging in...");
+				logger.info("Logging in...");
 				javax.swing.JLabel loadingLabel = new javax.swing.JLabel("Logging in, please wait...",
 						SwingConstants.CENTER);
 				loadingDialog.add(loadingLabel, BorderLayout.CENTER);
@@ -141,18 +147,19 @@ public class LoginMenu extends JFrame {
 				javax.swing.Timer timer = new javax.swing.Timer(1500, new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent evt) {
+						logger.info("Opened Login Module.");
 						loadingDialog.dispose(); // Close the loading popup after 1.5 seconds
 
 						// Checks the user in the database
 						if (authenticateUser(username, password)) {
-							System.out.println("\nLogin Successful.");
+							logger.info("Login Successful.");
 							JOptionPane.showMessageDialog(LoginMenu.this, "Login Successful!", "Login",
 									JOptionPane.INFORMATION_MESSAGE);
 
-							System.out.println("\nCalling Main Menu Module...");
+							logger.info("Calling Main Menu Module...");
 							Main.openMainMenu(username, LoginMenu.this);
 						} else {
-							System.out.println("\nLogin Error.");
+							logger.error("Login Error.");
 							JOptionPane.showMessageDialog(LoginMenu.this, "Invalid Username or Password.", "Login",
 									JOptionPane.ERROR_MESSAGE);
 						}
