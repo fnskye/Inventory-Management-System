@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import java.awt.Image;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import Main.Main;
 
 public class MainMenu extends JFrame {
 
@@ -37,7 +39,7 @@ public class MainMenu extends JFrame {
 		logger.info("Checking User...");
 		this.loggedInUser = username;
 
-		logger.info("User Identified: " + this.loggedInUser);
+		logger.info("Main Menu User: " + this.loggedInUser);
 		// Setup the Main Window
 		setTitle("Main Menu");
 		setSize(600, 450);
@@ -70,10 +72,10 @@ public class MainMenu extends JFrame {
 		Dimension buttonSize = new Dimension(250, 45);
 		Color buttonColor = new Color(105, 115, 132);
 
-		// Load images from Module/images folder
-		ImageIcon inventoryIcon = loadImageFromFile("src/Module/images/inventory.png", 32, 32);
-		ImageIcon orderIcon = loadImageFromFile("src/Module/images/order.png", 32, 32);
-		ImageIcon salesIcon = loadImageFromFile("src/Module/images/sales.png", 32, 32);
+		// Load images from the root images folder
+		ImageIcon inventoryIcon = loadImageFromFile("images/inventory.png", 32, 32);
+		ImageIcon orderIcon = loadImageFromFile("images/order.png", 32, 32);
+		ImageIcon salesIcon = loadImageFromFile("images/sales.png", 32, 32);
 
 		// --- Create 3 Buttons with custom panel layout ---
 		JButton inventoryButton = createCustomButton("Inventory", inventoryIcon, buttonColor, buttonSize);
@@ -92,26 +94,35 @@ public class MainMenu extends JFrame {
 
 		// --- Add Action Listeners for 3 buttons ---
 		inventoryButton.addActionListener(new ActionListener() {
+			private String loggedInUser = username;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Inventory Menu...");
 				simulateLoading("Inventory");
+				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
 
 		orderButton.addActionListener(new ActionListener() {
+			private String loggedInUser;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Order Menu...");
 				simulateLoading("Order");
+				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
 
 		salesReportButton.addActionListener(new ActionListener() {
+			private String loggedInUser;
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Sales Report...");
 				simulateLoading("Sales Report");
+				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
 	}
@@ -133,12 +144,6 @@ public class MainMenu extends JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				logger.info("Opening " + moduleName + " Module...");
 				loadingDialog.dispose();
-
-				// --- Might Improve Soon when there is Inventory, Order, Sales Report ----
-
-				// OverallSystem.openInventoryMenu(MainMenu.this);
-				// OverallSystem.openOrderMenu(MainMenu.this);
-				// OverallSystem.openSalesReport(MainMenu.this);
 			}
 		});
 
@@ -147,56 +152,38 @@ public class MainMenu extends JFrame {
 		loadingDialog.setVisible(true);
 	}
 
-	// Style button with icon
-	private void styleButton(JButton button, Dimension size, Color bgColor) {
-		button.setPreferredSize(size);
-		button.setBackground(bgColor);
-		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Arial", Font.PLAIN, 14));
-		button.setFocusPainted(false);
-		button.setBorderPainted(true);
-		button.setContentAreaFilled(true);
-		button.setIconTextGap(15);
-		button.setMargin(new Insets(0, 10, 0, 10));  // Left and right padding
-		button.setVerticalAlignment(SwingConstants.CENTER);
-		button.setVerticalTextPosition(SwingConstants.CENTER);
-		button.setHorizontalTextPosition(SwingConstants.RIGHT);
-		button.setHorizontalAlignment(SwingConstants.CENTER);
-		button.setBorder(javax.swing.BorderFactory.createLineBorder(
-			new Color(80, 90, 110), 2));  // Consistent border
-	}
-
-	// Create custom button with perfectly aligned icon
+	// Create custom button with decoupled Icon and Text
 	private JButton createCustomButton(String text, ImageIcon icon, Color bgColor, Dimension size) {
-		JButton button = new JButton(text);
 
-		int iconWidth = 0;
-		int gap = 15; 
+		// We override the built-in paint method to bypass Java's layout rules
+		JButton button = new JButton(text) {
+			@Override
+			protected void paintComponent(java.awt.Graphics graphics) {
+				super.paintComponent(graphics); // Makes the button background and perfectly centered text
 
-		if (icon != null) {
-			button.setIcon(icon);
-			iconWidth = icon.getIconWidth(); // Measure the icon dynamically
-		}
+				// Manually stamp the icon directly onto the screen
+				if (icon != null) {
+					// Calculate exact vertical center for the image
+					int iconHeight = (getHeight() - icon.getIconHeight()) / 2;
+
+					// Draw the icon exactly 25 pixels from the left edge
+					icon.paintIcon(this, graphics, 25, iconHeight);
+				}
+			}
+		};
 
 		button.setPreferredSize(size);
 		button.setBackground(bgColor);
 		button.setForeground(Color.WHITE);
-		button.setFont(new Font("Arial", Font.PLAIN, 14));
+		button.setFont(new Font("Arial", Font.PLAIN, 15));
 		button.setFocusPainted(false);
 		button.setContentAreaFilled(true);
 
-		// Group them together and put the text to the right of the icon
-		button.setHorizontalAlignment(SwingConstants.LEFT);
-		button.setVerticalAlignment(SwingConstants.CENTER);
-		button.setVerticalTextPosition(SwingConstants.CENTER);
-		button.setHorizontalTextPosition(SwingConstants.RIGHT);
-		button.setIconTextGap(gap);
+		// Centers the text perfectly
+		button.setHorizontalAlignment(SwingConstants.CENTER);
 
-		// Create original gray line border
-		javax.swing.border.Border line = javax.swing.BorderFactory.createLineBorder(new Color(80, 90, 110), 2);
-		button.setBorder(line);
-
-		button.setMargin(new java.awt.Insets(0, 105, 0, 0));
+		// Standard Slate Border
+		button.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(80, 90, 110), 2));
 
 		return button;
 	}
@@ -205,24 +192,20 @@ public class MainMenu extends JFrame {
 	private ImageIcon loadImageFromFile(String filePath, int width, int height) {
 		try {
 			java.io.File file = new java.io.File(filePath);
-			System.out.println("Attempting to load image: " + file.getAbsolutePath());
+			logger.debug("Attempting to load image: " + file.getAbsolutePath());
 			if (!file.exists()) {
-				System.err.println("Image file not found: " + file.getAbsolutePath());
 				logger.error("Image file not found: " + file.getAbsolutePath());
 				return null;
 			}
 			Image img = javax.imageio.ImageIO.read(file);
 			if (img == null) {
-				System.err.println("Failed to read image: " + filePath);
 				logger.error("Failed to read image: " + filePath);
 				return null;
 			}
 			Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			System.out.println("Successfully loaded image: " + filePath);
-			logger.info("Successfully loaded image: " + filePath);
+			logger.debug("Successfully loaded image: " + filePath);
 			return new ImageIcon(scaled);
 		} catch (Exception e) {
-			System.err.println("Error loading image: " + filePath);
 			logger.error("Error loading image: " + filePath, e);
 			e.printStackTrace();
 			return null;
