@@ -46,6 +46,7 @@ public class Dropdown {
 				createacc.setVisible(true);
 			});
 			optionsMenu.add(createAccountItem);
+			optionsMenu.addSeparator();
 
 			// --- Remove Account Button (for admin only) ---
 			if (username.equalsIgnoreCase("admin")) {
@@ -58,13 +59,27 @@ public class Dropdown {
 					removeacc.setVisible(true);
 				});
 				optionsMenu.add(removeAccountItem);
-				;
+				optionsMenu.addSeparator();
+			}
+
+			if (!("Main Menu".equals(currentScreen.getTitle()))) {
+				// --- Back to Main Menu Button (if only you are not in Main Menu) ---
+				JMenuItem backButton = new JMenuItem("Back");
+				backButton.addActionListener(e -> {
+					logger.info("Returning to Main Menu...");
+					currentScreen.dispose(); // Close current screen
+					MainMenu back = new MainMenu(username);
+					back.setVisible(true); // Open new main menu
+				});
+				optionsMenu.add(backButton);
+
+				optionsMenu.addSeparator();
 			}
 
 			// --- Logout Button ---
 			JMenuItem logoutItem = new JMenuItem("Logout");
 			logoutItem.addActionListener(e -> {
-				// Tells the System Manager to handle the logout!
+				// Tells the System Manager to handle the logout
 				int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Confirm",
 						JOptionPane.YES_NO_OPTION);
 				if (confirmation == JOptionPane.YES_OPTION) {
