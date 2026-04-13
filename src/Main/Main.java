@@ -11,6 +11,7 @@ import Module.InventoryMenu;
 import Module.LoginMenu;
 import Module.MainMenu;
 import Module.OrderMenu;
+import Module.SalesReport;
 
 public class Main {
 	// Global User Tracker
@@ -119,6 +120,24 @@ public class Main {
 		OrderMenu orderMenu = new OrderMenu(currentUser);
 		orderMenu.setVisible(true);
 		logger.info("Success Opening Order Menu.");
+	}
+
+	// --- Global Open Sales Report Menu ---
+	public static void openSalesReport(String username, JFrame currentScreen) {
+		// --- Open Order when called ---
+
+		// Save the user as global user when reaching ordder menu
+		currentUser = username;
+
+		// Close whatever screen the user is currently on
+		if (currentScreen != null) {
+			currentScreen.dispose();
+		}
+
+		// Open the SalesReport and pass the logged in username
+		SalesReport salesReport = new SalesReport(currentUser);
+		salesReport.setVisible(true);
+		logger.info("Success Opening Sales Menu.");
 	}
 
 	// --- Global Logout ---

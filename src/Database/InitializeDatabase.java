@@ -55,8 +55,17 @@ public class InitializeDatabase {
 					statement.execute(createProductsTable);
 					logger.info("Products table created successfully.");
 
+					String createTransactionTable = "CREATE TABLE IF NOT EXISTS Transactions ("
+							+ "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "order_date TEXT NOT NULL,"
+							+ "order_number TEXT NOT NULL," + "customer_name TEXT NOT NULL,"
+							+ "total_amount REAL NOT NULL" + ");";
+
+					// Execute statement
+					statement.execute(createTransactionTable);
+					logger.info("Transaction table created successfully.");
+
 					// Inserting a default admin account
-					String insertAdmin = "INSERT OR IGNORE INTO Users (username, password) VALUES ('admin', 'admin')";
+					String insertAdmin = "INSERT OR IGNORE INTO Users (username,  password) VALUES ('admin', 'admin')";
 					statement.execute(insertAdmin);
 					logger.info("Database connected.");
 				} catch (java.sql.SQLException e) {

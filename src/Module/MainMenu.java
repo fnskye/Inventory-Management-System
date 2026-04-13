@@ -115,13 +115,13 @@ public class MainMenu extends JFrame {
 		});
 
 		salesReportButton.addActionListener(new ActionListener() {
-			private String loggedInUser;
+			private String loggedInUser = username;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Sales Report...");
 				// simulateLoading("Sales Report");
-				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
+				Main.openSalesReport(this.loggedInUser, MainMenu.this);
 			}
 		});
 	}

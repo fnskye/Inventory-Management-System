@@ -417,7 +417,7 @@ public class InventoryMenu extends JFrame {
 		gbc.gridwidth = 1;
 		restockDialog.add(new JLabel("Selected Item:"), gbc);
 		gbc.gridx = 1;
-		restockDialog.add(new JLabel(productName));
+		restockDialog.add(new JLabel(productName), gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy = 2;
