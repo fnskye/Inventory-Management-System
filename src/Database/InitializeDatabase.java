@@ -62,7 +62,6 @@ public class InitializeDatabase {
 				} catch (java.sql.SQLException e) {
 					logger.error("Database connection failed!", e);
 				}
-
 			}
 			// Close connection
 			connection.close();

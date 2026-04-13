@@ -11537,3 +11537,617 @@ Exiting...
 2026-04-13 09:37:37 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
 2026-04-13 09:37:37 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
 2026-04-13 09:37:37 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:09:14 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:09:14 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 22:09:14 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:09:15 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 22:09:15 [main] INFO  Main.Main - Initializing...
+2026-04-13 22:09:16 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 22:09:16 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 22:09:16 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 22:09:17 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:09:19 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 22:09:19 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:09:47 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:09:48 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:09:48 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:09:51 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:09:51 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:09:51 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:09:52 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:12:08 [AWT-EventQueue-0] INFO  Main.Main - Logging Out...
+2026-04-13 22:12:10 [AWT-EventQueue-0] INFO  Main.Main - Success Logging Out.
+2026-04-13 22:12:10 [AWT-EventQueue-0] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:12:10 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:12:10 [AWT-EventQueue-0] INFO  Main.Main - Opened Login Module.
+2026-04-13 22:12:14 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:12:15 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:12:15 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:12:17 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:12:17 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:12:17 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:12:17 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:12:19 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:12:20 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:12:20 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:12:20 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:12:20 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:12:24 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:12:24 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:12:24 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:12:25 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:12:27 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:12:27 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:12:27 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:12:27 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:12:29 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:12:29 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:12:29 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:12:29 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Order Menu...
+2026-04-13 22:12:31 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Order Module...
+2026-04-13 22:12:31 [AWT-EventQueue-0] INFO  Module.OrderMenu - Initializing Order Menu for user: admin
+2026-04-13 22:12:31 [AWT-EventQueue-0] INFO  Module.OrderMenu - Order Menu initialized successfully.
+2026-04-13 22:12:31 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Order Menu.
+2026-04-13 22:12:33 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:12:33 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:12:33 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:12:57 [AWT-EventQueue-0] INFO  Module.Dropdown - Opening Remove Account Menu...
+2026-04-13 22:13:01 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Calling remove user...
+2026-04-13 22:13:01 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Cannot delete the admin account.
+2026-04-13 22:13:17 [AWT-EventQueue-0] INFO  Module.Dropdown - Opening Remove Account Menu...
+2026-04-13 22:13:23 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Calling remove user...
+2026-04-13 22:13:23 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Calling remove user...
+2026-04-13 22:13:23 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Calling remove user...
+2026-04-13 22:13:26 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Calling remove user...
+2026-04-13 22:13:26 [AWT-EventQueue-0] INFO  User.RemoveAccountMenu - Cannot delete the admin account.
+2026-04-13 22:13:33 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:13:34 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:13:34 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:13:34 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:13:34 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:18:11 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:18:11 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 22:18:11 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:18:12 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 22:18:12 [main] INFO  Main.Main - Initializing...
+2026-04-13 22:18:13 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 22:18:13 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 22:18:13 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 22:18:14 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:18:16 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 22:18:16 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:18:49 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:18:51 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:18:51 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:18:52 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:18:52 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:18:52 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:18:52 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:19:00 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:19:01 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:19:01 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:19:01 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:19:01 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:19:06 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:19:06 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:19:06 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:19:12 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:19:13 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:19:13 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:19:13 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:19:13 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:20:39 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:20:39 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:20:39 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:20:44 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:20:46 [AWT-EventQueue-0] INFO  Module.MainMenu - Opening Inventory Module...
+2026-04-13 22:20:46 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:20:46 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:20:46 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:20:48 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:20:48 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:20:48 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:21:25 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:21:25 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 22:21:25 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:21:27 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 22:21:27 [main] INFO  Main.Main - Initializing...
+2026-04-13 22:21:27 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 22:21:27 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 22:21:27 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 22:21:29 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:21:30 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 22:21:30 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:21:35 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:21:37 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:21:43 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:21:43 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:21:43 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:21:43 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:21:45 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:21:45 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:21:45 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:21:46 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Order Menu...
+2026-04-13 22:21:46 [AWT-EventQueue-0] INFO  Module.OrderMenu - Initializing Order Menu for user: admin
+2026-04-13 22:21:46 [AWT-EventQueue-0] INFO  Module.OrderMenu - Order Menu initialized successfully.
+2026-04-13 22:21:46 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Order Menu.
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:21:48 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:21:51 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:21:51 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:21:51 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:22:00 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:22:00 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:22:00 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:22:00 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:22:04 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:22:04 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:22:04 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:22:09 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Order Menu...
+2026-04-13 22:22:09 [AWT-EventQueue-0] INFO  Module.OrderMenu - Initializing Order Menu for user: admin
+2026-04-13 22:22:09 [AWT-EventQueue-0] INFO  Module.OrderMenu - Order Menu initialized successfully.
+2026-04-13 22:22:09 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Order Menu.
+2026-04-13 22:22:11 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:22:11 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:22:11 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:22:12 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:22:12 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:22:12 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:22:12 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Order Menu...
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.OrderMenu - Initializing Order Menu for user: admin
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Module.OrderMenu - Order Menu initialized successfully.
+2026-04-13 22:22:15 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Order Menu.
+2026-04-13 22:22:25 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:22:25 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:22:25 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:25:25 [AWT-EventQueue-0] INFO  Module.Dropdown - Opening Create Account Menu...
+2026-04-13 22:25:34 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:25:34 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:25:34 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:25:34 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:25:42 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:25:42 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:25:42 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:25:44 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:25:44 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:25:44 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:25:44 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:26:02 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:26:02 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:26:02 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:28:07 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:28:07 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 22:28:07 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:28:08 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 22:28:08 [main] INFO  Main.Main - Initializing...
+2026-04-13 22:28:09 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 22:28:09 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 22:28:09 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 22:28:10 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:28:12 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 22:28:12 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:28:19 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:28:21 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:28:31 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:28:31 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Initializing Inventory Menu for user: admin
+2026-04-13 22:28:31 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory Menu initialized successfully.
+2026-04-13 22:28:31 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:28:33 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:28:33 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:28:33 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:28:34 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Order Menu...
+2026-04-13 22:28:34 [AWT-EventQueue-0] INFO  Module.OrderMenu - Initializing Order Menu for user: admin
+2026-04-13 22:28:34 [AWT-EventQueue-0] INFO  Module.OrderMenu - Order Menu initialized successfully.
+2026-04-13 22:28:34 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Order Menu.
+2026-04-13 22:28:36 [AWT-EventQueue-0] INFO  Module.Dropdown - Returning to Main Menu...
+2026-04-13 22:28:36 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:28:36 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:51:25 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:51:25 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 22:51:25 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 22:51:26 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 22:51:27 [main] INFO  Main.Main - Initializing...
+2026-04-13 22:51:27 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 22:51:27 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 22:51:27 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 22:51:28 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 22:51:30 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 22:51:30 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 22:51:33 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 22:51:35 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 22:51:35 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 22:51:35 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 22:51:35 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 22:51:35 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 22:51:36 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 22:51:39 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 22:51:39 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Checking User...
+2026-04-13 22:51:39 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 22:51:39 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 22:53:15 [AWT-EventQueue-0] INFO  Module.InventoryMenu - New product added: Fuck Everything
+2026-04-13 22:53:16 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 22:54:44 [AWT-EventQueue-0] INFO  Module.InventoryMenu - New product added: Honor X7D
+2026-04-13 22:54:46 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 22:59:45 [AWT-EventQueue-0] ERROR Module.InventoryMenu - Please Input a number, Error updating quantity in database.
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at Module.InventoryMenu.lambda$5(InventoryMenu.java:427)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at Module.InventoryMenu.restockProduct(InventoryMenu.java:454)
+	at Module.InventoryMenu.lambda$1(InventoryMenu.java:165)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+2026-04-13 22:59:46 [AWT-EventQueue-0] ERROR Module.InventoryMenu - Please Input a number, Error updating quantity in database.
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at Module.InventoryMenu.lambda$5(InventoryMenu.java:427)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at Module.InventoryMenu.restockProduct(InventoryMenu.java:454)
+	at Module.InventoryMenu.lambda$1(InventoryMenu.java:165)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+2026-04-13 22:59:47 [AWT-EventQueue-0] ERROR Module.InventoryMenu - Please Input a number, Error updating quantity in database.
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at java.lang.Integer.parseInt(Unknown Source)
+	at Module.InventoryMenu.lambda$5(InventoryMenu.java:427)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.WaitDispatchSupport$2.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.awt.WaitDispatchSupport$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.awt.WaitDispatchSupport.enter(Unknown Source)
+	at java.awt.Dialog.show(Unknown Source)
+	at java.awt.Component.show(Unknown Source)
+	at java.awt.Component.setVisible(Unknown Source)
+	at java.awt.Window.setVisible(Unknown Source)
+	at java.awt.Dialog.setVisible(Unknown Source)
+	at Module.InventoryMenu.restockProduct(InventoryMenu.java:454)
+	at Module.InventoryMenu.lambda$1(InventoryMenu.java:165)
+	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
+	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
+	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
+	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
+	at java.awt.Component.processMouseEvent(Unknown Source)
+	at javax.swing.JComponent.processMouseEvent(Unknown Source)
+	at java.awt.Component.processEvent(Unknown Source)
+	at java.awt.Container.processEvent(Unknown Source)
+	at java.awt.Component.dispatchEventImpl(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
+	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
+	at java.awt.Container.dispatchEventImpl(Unknown Source)
+	at java.awt.Window.dispatchEventImpl(Unknown Source)
+	at java.awt.Component.dispatchEvent(Unknown Source)
+	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
+	at java.awt.EventQueue.access$500(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.awt.EventQueue$3.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.awt.EventQueue$4.run(Unknown Source)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(Unknown Source)
+	at java.awt.EventQueue.dispatchEvent(Unknown Source)
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
+	at java.awt.EventDispatchThread.run(Unknown Source)
+2026-04-13 23:01:42 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:01:42 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 23:01:42 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:01:44 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 23:01:44 [main] INFO  Main.Main - Initializing...
+2026-04-13 23:01:44 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 23:01:44 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 23:01:44 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 23:01:46 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 23:01:47 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 23:01:47 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 23:01:51 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 23:01:52 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 23:01:52 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 23:01:53 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 23:01:53 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 23:01:53 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 23:01:53 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 23:01:56 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 23:01:56 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Checking User...
+2026-04-13 23:01:56 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:01:56 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 23:02:19 [AWT-EventQueue-0] INFO  Module.InventoryMenu - New product added: asdaasd
+2026-04-13 23:02:20 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:13:34 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:13:34 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 23:13:34 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:13:35 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 23:13:36 [main] INFO  Main.Main - Initializing...
+2026-04-13 23:13:36 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 23:13:36 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 23:13:36 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 23:13:37 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 23:13:39 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 23:13:39 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 23:15:16 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:15:16 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 23:15:16 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:15:18 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 23:15:18 [main] INFO  Main.Main - Initializing...
+2026-04-13 23:15:19 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 23:15:19 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 23:15:19 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 23:15:20 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 23:15:22 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 23:15:22 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 23:15:25 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 23:15:27 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 23:15:27 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 23:15:27 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 23:15:27 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 23:15:27 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 23:15:28 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 23:15:29 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 23:15:29 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Checking User...
+2026-04-13 23:15:29 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:15:29 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 23:18:39 [AWT-EventQueue-0] INFO  Module.InventoryMenu - New product added: 45646456
+2026-04-13 23:18:46 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:27:01 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:27:01 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 23:27:01 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:27:03 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 23:27:03 [main] INFO  Main.Main - Initializing...
+2026-04-13 23:27:03 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 23:27:03 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 23:27:03 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 23:27:05 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 23:27:06 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 23:27:06 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 23:27:13 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 23:27:15 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 23:27:16 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 23:27:16 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Checking User...
+2026-04-13 23:27:16 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:27:16 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.
+2026-04-13 23:31:41 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:31:41 [main] INFO  Main.Main - |   Inventory System Started Successfully   |
+2026-04-13 23:31:41 [main] INFO  Main.Main - ---------------------------------------------
+2026-04-13 23:31:42 [main] INFO  Main.Main - Attempting to connect to the database...
+2026-04-13 23:31:42 [main] INFO  Main.Main - Initializing...
+2026-04-13 23:31:43 [main] INFO  Database.InitializeDatabase - Successfully connected to external database at: jdbc:sqlite:C:\Users\User\eclipse-workspace\AutomatedInventoryManagementSystem/database.db
+2026-04-13 23:31:43 [main] INFO  Database.InitializeDatabase - Products table created successfully.
+2026-04-13 23:31:43 [main] INFO  Database.InitializeDatabase - Database connected.
+2026-04-13 23:31:44 [main] INFO  Main.Main - Calling Login Module...
+2026-04-13 23:31:46 [AWT-EventQueue-0] INFO  Main.Main - Initializing...
+2026-04-13 23:31:46 [AWT-EventQueue-0] INFO  Main.Main - Opening Login Module...
+2026-04-13 23:31:52 [AWT-EventQueue-0] INFO  Module.LoginMenu - Logging in...
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Module.LoginMenu - Opened Login Module.
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Module.LoginMenu - Login Successful.
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Module.LoginMenu - Calling Main Menu Module...
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Module.MainMenu - Checking User...
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Module.MainMenu - Main Menu User: admin
+2026-04-13 23:31:54 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Main Menu.
+2026-04-13 23:31:56 [AWT-EventQueue-0] INFO  Module.MainMenu - Clicked Inventory Menu...
+2026-04-13 23:31:56 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Checking User...
+2026-04-13 23:31:56 [AWT-EventQueue-0] INFO  Module.InventoryMenu - Inventory data loaded successfully.
+2026-04-13 23:31:56 [AWT-EventQueue-0] INFO  Main.Main - Success Opening Inventory Menu.

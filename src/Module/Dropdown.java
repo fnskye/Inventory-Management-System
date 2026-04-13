@@ -34,7 +34,7 @@ public class Dropdown {
 	// Dropdown Menu System (might improve in the future)
 	public static JMenuBar createTopMenu(boolean isLoggedIn, String username, JFrame currentScreen) {
 		JMenuBar menuBar = new JMenuBar();
-		JMenu optionsMenu = new JMenu("≡ Menu");
+		JMenu optionsMenu = new JMenu("≡ File");
 
 		if (isLoggedIn) {
 			// --- Account Creation and Removal Button (for admin only) ---
@@ -68,10 +68,14 @@ public class Dropdown {
 				// --- Back to Main Menu Button (if only you are not in Main Menu) ---
 				JMenuItem backButton = new JMenuItem("Back");
 				backButton.addActionListener(e -> {
-					logger.info("Returning to Main Menu...");
-					currentScreen.dispose(); // Close current screen
-					MainMenu back = new MainMenu(username);
-					back.setVisible(true); // Open new main menu
+					int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?",
+							"Confirm", JOptionPane.YES_NO_OPTION);
+					if (confirmation == JOptionPane.YES_OPTION) {
+						logger.info("Returning to Main Menu...");
+						currentScreen.dispose(); // Close current screen
+						MainMenu back = new MainMenu(username);
+						back.setVisible(true); // Open new main menu
+					}
 				});
 				optionsMenu.add(backButton);
 

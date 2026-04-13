@@ -98,7 +98,7 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Inventory Menu...");
-				simulateLoading("Inventory");
+				// simulateLoading("Inventory");
 				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
@@ -109,7 +109,7 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Order Menu...");
-				simulateLoading("Order");
+				// simulateLoading("Order");
 				Main.openOrderMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
@@ -120,36 +120,33 @@ public class MainMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Sales Report...");
-				simulateLoading("Sales Report");
+				// simulateLoading("Sales Report");
 				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
 	}
-
-	// Simulate the Loading (tentative)
-	private void simulateLoading(String moduleName) {
-
-		javax.swing.JDialog loadingDialog = new javax.swing.JDialog(this, "Opening " + moduleName + " Module...", true);
-		loadingDialog.setSize(250, 100);
-		loadingDialog.setLocationRelativeTo(this);
-		loadingDialog.setDefaultCloseOperation(javax.swing.JDialog.DO_NOTHING_ON_CLOSE);
-
-		javax.swing.JLabel loadingLabel = new javax.swing.JLabel("Opening " + moduleName + " Module...",
-				SwingConstants.CENTER);
-		loadingDialog.add(loadingLabel, BorderLayout.CENTER);
-
-		javax.swing.Timer timer = new javax.swing.Timer(1500, new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent evt) {
-				logger.info("Opening " + moduleName + " Module...");
-				loadingDialog.dispose();
-			}
-		});
-
-		timer.setRepeats(false);
-		timer.start();
-		loadingDialog.setVisible(true);
-	}
+	/*
+	 * // Simulate the Loading (tentative) private void simulateLoading(String
+	 * moduleName) {
+	 * 
+	 * javax.swing.JDialog loadingDialog = new javax.swing.JDialog(this, "Opening "
+	 * + moduleName + " Module...", true); loadingDialog.setSize(250, 100);
+	 * loadingDialog.setLocationRelativeTo(this);
+	 * loadingDialog.setDefaultCloseOperation(javax.swing.JDialog.
+	 * DO_NOTHING_ON_CLOSE);
+	 * 
+	 * javax.swing.JLabel loadingLabel = new javax.swing.JLabel("Opening " +
+	 * moduleName + " Module...", SwingConstants.CENTER);
+	 * loadingDialog.add(loadingLabel, BorderLayout.CENTER);
+	 * 
+	 * javax.swing.Timer timer = new javax.swing.Timer(1500, new ActionListener() {
+	 * 
+	 * @Override public void actionPerformed(ActionEvent evt) {
+	 * logger.info("Opening " + moduleName + " Module..."); loadingDialog.dispose();
+	 * } });
+	 * 
+	 * timer.setRepeats(false); timer.start(); loadingDialog.setVisible(true); }
+	 */
 
 	// Create custom button with decoupled Icon and Text
 	private JButton createCustomButton(String text, ImageIcon icon, Color bgColor, Dimension size) {
