@@ -29,17 +29,40 @@ public class InitializeDatabase {
 				Statement statement = connection.createStatement()) {
 
 			if (connection != null) {
-				// Creating user table
-				String createUsersTable = "CREATE TABLE IF NOT EXISTS Users ("
-						+ "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "username TEXT UNIQUE NOT NULL, "
-						+ "password TEXT NOT NULL)";
-				// Execute statement
-				statement.execute(createUsersTable);
 
-				// Inserting a default admin account
-				String insertAdmin = "INSERT OR IGNORE INTO Users (username, password) VALUES ('admin', 'admin')";
-				statement.execute(insertAdmin);
-				logger.info("Database connected.");
+				// Ask the OS where the app is currently running from
+				String currentFolder = System.getProperty("user.dir");
+
+				// Build the absolute path to the external database file
+				String dbUrl = "jdbc:sqlite:" + currentFolder + "/database.db";
+
+				// Connect to the database
+				try (java.sql.Connection connectdbUrl = java.sql.DriverManager.getConnection(dbUrl)) {
+					logger.info("Successfully connected to external database at: " + dbUrl);
+					// Creating user table for Login Menu
+					String createUsersTable = "CREATE TABLE IF NOT EXISTS Users ("
+							+ "id INTEGER PRIMARY KEY AUTOINCREMENT, " + "username TEXT UNIQUE NOT NULL, "
+							+ "password TEXT NOT NULL)";
+					// Execute statement
+					statement.execute(createUsersTable);
+
+					// Creating product table for Inventory Menu
+					String createProductsTable = "CREATE TABLE IF NOT EXISTS Products ("
+							+ "id INTEGER PRIMARY KEY AUTOINCREMENT," + "product_name TEXT NOT NULL UNIQUE,"
+							+ "category TEXT NOT NULL," + "price REAL NOT NULL," + "stock INTEGER NOT NULL" + ");";
+
+					// Execute statement
+					statement.execute(createProductsTable);
+					logger.info("Products table created successfully.");
+
+					// Inserting a default admin account
+					String insertAdmin = "INSERT OR IGNORE INTO Users (username, password) VALUES ('admin', 'admin')";
+					statement.execute(insertAdmin);
+					logger.info("Database connected.");
+				} catch (java.sql.SQLException e) {
+					logger.error("Database connection failed!", e);
+				}
+
 			}
 			// Close connection
 			connection.close();

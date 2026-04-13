@@ -37,19 +37,21 @@ public class Dropdown {
 		JMenu optionsMenu = new JMenu("≡ Menu");
 
 		if (isLoggedIn) {
-			// --- Create Account Button ---
-			JMenuItem createAccountItem = new JMenuItem("Create Account");
-			createAccountItem.addActionListener(e -> {
-				// Opens the Create Account window
-				CreateAccountMenu createacc = new CreateAccountMenu(currentScreen);
-				logger.info("Opening Create Account Menu...");
-				createacc.setVisible(true);
-			});
-			optionsMenu.add(createAccountItem);
-			optionsMenu.addSeparator();
+			// --- Account Creation and Removal Button (for admin only) ---
+			if (username.equalsIgnoreCase("admin") && ("Main Menu".equals(currentScreen.getTitle()))) {
+				// --- Create Account Button ---
+				JMenuItem createAccountItem = new JMenuItem("Create Account");
+				createAccountItem.addActionListener(e -> {
+					// Opens the Create Account window
+					CreateAccountMenu createacc = new CreateAccountMenu(currentScreen);
+					logger.info("Opening Create Account Menu...");
+					createacc.setVisible(true);
+				});
+				optionsMenu.add(createAccountItem);
+				optionsMenu.addSeparator();
+			}
 
-			// --- Remove Account Button (for admin only) ---
-			if (username.equalsIgnoreCase("admin")) {
+			if (username.equalsIgnoreCase("admin") && ("Main Menu".equals(currentScreen.getTitle()))) {
 				// --- Remove Account Button ---
 				JMenuItem removeAccountItem = new JMenuItem("Remove Account");
 				removeAccountItem.addActionListener(e -> {

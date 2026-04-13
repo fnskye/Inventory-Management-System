@@ -7,8 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import Database.InitializeDatabase;
+import Module.InventoryMenu;
 import Module.LoginMenu;
 import Module.MainMenu;
+import Module.OrderMenu;
 
 public class Main {
 	// Global User Tracker
@@ -32,7 +34,7 @@ public class Main {
 			InitializeDatabase.initializeDatabase();
 
 		} catch (Exception e) {
-			logger.error("CRITICAL: Failed to load database.", e);
+			logger.error("Failed to load database.", e);
 		}
 
 		// Initialize and read the database
@@ -81,6 +83,42 @@ public class Main {
 		MainMenu mainMenu = new MainMenu(username);
 		mainMenu.setVisible(true);
 		logger.info("Success Opening Main Menu.");
+	}
+
+	// --- Global Open Inventory Menu ---
+	public static void openInventoryMenu(String username, JFrame currentScreen) {
+		// --- Open Inventory when called ---
+
+		// Save the user as global user when reaching inventory menu
+		currentUser = username;
+
+		// Close whatever screen the user is currently on
+		if (currentScreen != null) {
+			currentScreen.dispose();
+		}
+
+		// Open the Inventory Menu and pass the logged in username
+		InventoryMenu inventoryMenu = new InventoryMenu(currentUser);
+		inventoryMenu.setVisible(true);
+		logger.info("Success Opening Inventory Menu.");
+	}
+
+	// --- Global Open Order Menu ---
+	public static void openOrderMenu(String username, JFrame currentScreen) {
+		// --- Open Order when called ---
+
+		// Save the user as global user when reaching ordder menu
+		currentUser = username;
+
+		// Close whatever screen the user is currently on
+		if (currentScreen != null) {
+			currentScreen.dispose();
+		}
+
+		// Open the Order Menu and pass the logged in username
+		OrderMenu orderMenu = new OrderMenu(currentUser);
+		orderMenu.setVisible(true);
+		logger.info("Success Opening Order Menu.");
 	}
 
 	// --- Global Logout ---

@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,10 +71,10 @@ public class MainMenu extends JFrame {
 		Dimension buttonSize = new Dimension(250, 45);
 		Color buttonColor = new Color(105, 115, 132);
 
-		// Load images from the root images folder
-		ImageIcon inventoryIcon = loadImageFromFile("images/inventory.png", 32, 32);
-		ImageIcon orderIcon = loadImageFromFile("images/order.png", 32, 32);
-		ImageIcon salesIcon = loadImageFromFile("images/sales.png", 32, 32);
+		// .exe Safe loader
+		ImageIcon inventoryIcon = loadIconFromResource("/Module/images/inventory.png", 32, 32);
+		ImageIcon orderIcon = loadIconFromResource("/Module/images/order.png", 32, 32);
+		ImageIcon salesIcon = loadIconFromResource("/Module/images/sales.png", 32, 32);
 
 		// --- Create 3 Buttons with custom panel layout ---
 		JButton inventoryButton = createCustomButton("Inventory", inventoryIcon, buttonColor, buttonSize);
@@ -105,13 +104,13 @@ public class MainMenu extends JFrame {
 		});
 
 		orderButton.addActionListener(new ActionListener() {
-			private String loggedInUser;
+			private String loggedInUser = username;
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.info("Clicked Order Menu...");
 				simulateLoading("Order");
-				Main.openInventoryMenu(this.loggedInUser, MainMenu.this);
+				Main.openOrderMenu(this.loggedInUser, MainMenu.this);
 			}
 		});
 
@@ -188,26 +187,23 @@ public class MainMenu extends JFrame {
 		return button;
 	}
 
-	// Load image from file path
-	private ImageIcon loadImageFromFile(String filePath, int width, int height) {
+	// --- .exe Safe Image Loader ---
+	private ImageIcon loadIconFromResource(String resourcePath, int width, int height) {
 		try {
-			java.io.File file = new java.io.File(filePath);
-			logger.debug("Attempting to load image: " + file.getAbsolutePath());
-			if (!file.exists()) {
-				logger.error("Image file not found: " + file.getAbsolutePath());
+			// This looks inside compiled .exe or .jar file
+			java.net.URL imgURL = getClass().getResource(resourcePath);
+
+			if (imgURL == null) {
+				logger.error("CRITICAL: Image missing inside .exe file -> " + resourcePath);
 				return null;
 			}
-			Image img = javax.imageio.ImageIO.read(file);
-			if (img == null) {
-				logger.error("Failed to read image: " + filePath);
-				return null;
-			}
-			Image scaled = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-			logger.debug("Successfully loaded image: " + filePath);
+
+			java.awt.Image img = javax.imageio.ImageIO.read(imgURL);
+			java.awt.Image scaled = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 			return new ImageIcon(scaled);
+
 		} catch (Exception e) {
-			logger.error("Error loading image: " + filePath, e);
-			e.printStackTrace();
+			logger.error("Error loading resource: " + resourcePath, e);
 			return null;
 		}
 	}
