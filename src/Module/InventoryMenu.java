@@ -101,7 +101,7 @@ public class InventoryMenu extends JFrame {
 		return topPanel;
 	}
 
-	// Fixed Formatting!
+	// Fixed Formatting.
 	private JScrollPane createTablePanel() {
 		String[] columns = { "Product Name", "Category", "Price", "Stock", "Status" };
 
@@ -140,7 +140,7 @@ public class InventoryMenu extends JFrame {
 		return scrollPane;
 	}
 
-	// Fixed Formatting!
+	// Fixed Formatting.
 	private JPanel createBottomPanel() {
 		JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
 
@@ -302,9 +302,11 @@ public class InventoryMenu extends JFrame {
 		JButton saveProductButton = new JButton("Save Product");
 		saveProductButton.setBackground(darkGray);
 		saveProductButton.setForeground(Color.WHITE);
+		saveProductButton.setEnabled(true);
 		saveProductButton.setFocusPainted(false);
 
-		stockField.getDocument().addDocumentListener(new DocumentListener() {
+		// Input Listener to all Fields
+		DocumentListener fieldListener = new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				checkMatch();
 			}
@@ -320,67 +322,109 @@ public class InventoryMenu extends JFrame {
 			private void checkMatch() {
 				String name = nameField.getText().trim();
 				String category = categoryField.getText().trim();
-				String stock = stockField.getText().trim();
-				String price = priceField.getText().trim();
+				String strPrice = priceField.getText().trim();
+				String strStock = stockField.getText().trim();
 
-				if (stock.isEmpty()) {
-					saveProductButton.setBackground(darkGray);
-					textLabel.setText(" ");
-				} else {
-					try {
-						int val = Integer.parseInt(stock);
-						if (val > 0 && !price.isEmpty() && !stock.isEmpty() && !category.isEmpty() && !name.isEmpty()) {
-							saveProductButton.setBackground(lightGreen);
-						}
-						if (val <= 0) {
-							saveProductButton.setBackground(darkGray);
-							textLabel.setForeground(Color.RED);
-							textLabel.setText("Initial stock must be greater than 0.");
-						}
-					} catch (NumberFormatException ex) {
-						saveProductButton.setBackground(darkGray);
+				saveProductButton.setBackground(darkGray);
+				textLabel.setText(" ");
+
+				if (name.isEmpty() || category.isEmpty() || strPrice.isEmpty() || strStock.isEmpty()) {
+					return; // Return to original state
+				}
+
+				try {
+					double price = Double.parseDouble(strPrice);
+					int stock = Integer.parseInt(strStock);
+
+					// Number rules
+					if (price <= 0) {
 						textLabel.setForeground(Color.RED);
-						textLabel.setText("Invalid number format.");
+						textLabel.setText("Price must be greater than 0.");
+						return;
 					}
+
+					if (stock <= 0) {
+						textLabel.setForeground(Color.RED);
+						textLabel.setText("Initial stock must be greater than 0.");
+						return;
+					}
+
+					saveProductButton.setBackground(lightGreen);
+					textLabel.setText(" ");
+
+				} catch (NumberFormatException ex) {
+					textLabel.setForeground(Color.RED);
+					textLabel.setText("Price and Stock must be valid numbers.");
 				}
 			}
-		});
+		};
 
-		saveProductButton.addActionListener(e ->
+		// Add Listener to 4 fields
+		nameField.getDocument().addDocumentListener(fieldListener);
+		categoryField.getDocument().addDocumentListener(fieldListener);
+		priceField.getDocument().addDocumentListener(fieldListener);
+		stockField.getDocument().addDocumentListener(fieldListener);
 
-		{
+		// Save Product Button
+		saveProductButton.addActionListener(e -> {
+			String name = nameField.getText().trim();
+			String category = categoryField.getText().trim();
+			String strPrice = priceField.getText().trim();
+			String strStock = stockField.getText().trim();
+
+			// Array field to check
+			String[][] fieldsChecker = { { "Product Name", name }, { "Category", category }, { "Price", strPrice },
+					{ "Stock", strStock } };
+
+			// Looping array to find the first blank field
+			for (int i = 0; i < fieldsChecker.length; i++) {
+				String fieldName = fieldsChecker[i][0];
+				String fieldValue = fieldsChecker[i][1];
+
+				if (fieldValue.isEmpty()) {
+					textLabel.setForeground(Color.RED);
+					textLabel.setText(fieldName + " cannot be empty.");
+					return; // Stop the code right here until they fix it
+				}
+			}
+
 			try {
-				String name = nameField.getText();
-				String category = categoryField.getText();
-				double price = Double.parseDouble(priceField.getText());
+				double price = Double.parseDouble(strPrice);
+				int stock = Integer.parseInt(strStock);
 
-				int stock = Integer.parseInt(stockField.getText());
-				if (stock <= 0) {
+				if (price <= 0 || stock <= 0) {
 					return;
 				}
 
-				// Using the central dbUrl
+				// Save into Database
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
-						java.sql.PreparedStatement preparedStatement = connection.prepareStatement(
+						java.sql.PreparedStatement ps = connection.prepareStatement(
 								"INSERT INTO Products (product_name, category, price, stock) VALUES (?, ?, ?, ?)")) {
 
-					preparedStatement.setString(1, name);
-					preparedStatement.setString(2, category);
-					preparedStatement.setDouble(3, price);
-					preparedStatement.setInt(4, stock);
-					preparedStatement.executeUpdate();
+					ps.setString(1, name);
+					ps.setString(2, category);
+					ps.setDouble(3, price);
+					ps.setInt(4, stock);
+					ps.executeUpdate();
 
 					logger.info("New product added: " + name);
 					javax.swing.JOptionPane.showMessageDialog(addDialog, "Product added successfully.");
 					addDialog.dispose();
 					loadInventoryData();
+
 				} catch (Exception sqlException) {
-					logger.error("Database error while adding product", sqlException);
-					javax.swing.JOptionPane.showMessageDialog(addDialog, "Error: Product name might already exist.");
+					logger.error("Product name already exist.", sqlException);
+					logger.debug("Product name already exist.", sqlException);
+					textLabel.setText("Product name already exist.");
+					textLabel.setForeground(Color.RED);
+					return;
 				}
-			} catch (NumberFormatException numError) {
-				javax.swing.JOptionPane.showMessageDialog(addDialog,
-						"Please enter a valid numbers for Price and Stock.");
+
+			} catch (NumberFormatException numEx) {
+				textLabel.setForeground(Color.RED);
+				textLabel.setText("Price and Stock must be valid numbers.");
+			} catch (Exception fatalError) {
+				logger.error("A fatal error occurred during the save process.", fatalError);
 			}
 		});
 
@@ -484,7 +528,7 @@ public class InventoryMenu extends JFrame {
 				if (addedStock <= 0)
 					return;
 
-				// Using the central dbUrl
+				// Using dbUrl
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
 						java.sql.PreparedStatement preparedStatement = connection
 								.prepareStatement("UPDATE Products SET stock = stock + ? WHERE product_name = ?")) {
@@ -494,7 +538,7 @@ public class InventoryMenu extends JFrame {
 					preparedStatement.executeUpdate();
 
 					javax.swing.JOptionPane.showMessageDialog(restockDialog,
-							"Successfully added " + addedStock + " units!");
+							"Successfully added " + addedStock + " units.");
 					restockDialog.dispose();
 					loadInventoryData();
 				} catch (Exception sqlEx) {
@@ -513,7 +557,7 @@ public class InventoryMenu extends JFrame {
 	private void openEditProductWindow() {
 		int selectedRow = inventoryTable.getSelectedRow();
 		if (selectedRow == -1) {
-			javax.swing.JOptionPane.showMessageDialog(this, "Please select a product to edit!");
+			javax.swing.JOptionPane.showMessageDialog(this, "Please select a product to edit.");
 			return;
 		}
 
@@ -567,29 +611,128 @@ public class InventoryMenu extends JFrame {
 		gbc.gridx = 1;
 		editDialog.add(stockField, gbc);
 
+		JLabel textLabel = new JLabel(" ");
+		textLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		gbc.gridx = 0;
 		gbc.gridy = 5;
+		gbc.gridwidth = 2;
+		editDialog.add(textLabel, gbc);
+
+		gbc.gridy = 6;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		JButton updateProductButton = new JButton("Update Product");
-		updateProductButton.setBackground(darkGray);
+		updateProductButton.setBackground(lightGreen);
 		updateProductButton.setForeground(Color.WHITE);
 		updateProductButton.setFocusPainted(false);
 		editDialog.add(updateProductButton, gbc);
 
-		updateProductButton.addActionListener(e -> {
-			try {
-				String newName = nameField.getText();
-				String newCat = categoryField.getText();
-				double newPrice = Double.parseDouble(priceField.getText());
-				int newStock = Integer.parseInt(stockField.getText());
+		String name = nameField.getText().trim();
+		String category = categoryField.getText().trim();
+		String strPrice = priceField.getText().trim();
+		String strStock = stockField.getText().trim();
 
-				// Using the central dbUrl
+		if (name.isEmpty() || category.isEmpty() || strPrice.isEmpty() || strStock.isEmpty()) {
+			updateProductButton.setBackground(darkGray);
+		}
+
+		// Input Listener to all Fields
+		DocumentListener fieldListener = new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				checkMatch();
+			}
+
+			public void insertUpdate(DocumentEvent e) {
+				checkMatch();
+			}
+
+			public void removeUpdate(DocumentEvent e) {
+				checkMatch();
+			}
+
+			private void checkMatch() {
+				String name = nameField.getText().trim();
+				String category = categoryField.getText().trim();
+				String strPrice = priceField.getText().trim();
+				String strStock = stockField.getText().trim();
+
+				updateProductButton.setBackground(darkGray);
+				textLabel.setText(" ");
+
+				if (name.isEmpty() || category.isEmpty() || strPrice.isEmpty() || strStock.isEmpty()) {
+					return; // Return to original state
+				}
+
+				try {
+					double price = Double.parseDouble(strPrice);
+					int stock = Integer.parseInt(strStock);
+
+					// Number rules
+					if (price <= 0) {
+						textLabel.setForeground(Color.RED);
+						textLabel.setText("Price must be greater than 0.");
+						return;
+					}
+
+					if (stock <= 0) {
+						textLabel.setForeground(Color.RED);
+						textLabel.setText("Initial stock must be greater than 0.");
+						return;
+					}
+
+					updateProductButton.setBackground(lightGreen);
+					textLabel.setText(" ");
+
+				} catch (NumberFormatException ex) {
+					textLabel.setForeground(Color.RED);
+					textLabel.setText("Price and Stock must be valid numbers.");
+				}
+			}
+		};
+
+		// Add Listener to 4 fields
+		nameField.getDocument().addDocumentListener(fieldListener);
+		categoryField.getDocument().addDocumentListener(fieldListener);
+		priceField.getDocument().addDocumentListener(fieldListener);
+		stockField.getDocument().addDocumentListener(fieldListener);
+
+		updateProductButton.addActionListener(e -> {
+			String newName = nameField.getText();
+			String newCategory = categoryField.getText();
+			String newStrPrice = priceField.getText();
+			String newStrStock = stockField.getText();
+
+			// Array field to check
+			String[][] fieldsChecker = { { "Product Name", newName }, { "Category", newCategory },
+					{ "Price", newStrPrice }, { "Stock", newStrStock } };
+
+			// Looping array to find the first blank field
+			for (int i = 0; i < fieldsChecker.length; i++) {
+				String fieldName = fieldsChecker[i][0];
+				String fieldValue = fieldsChecker[i][1];
+
+				if (fieldValue.isEmpty()) {
+					textLabel.setForeground(Color.RED);
+					textLabel.setText(fieldName + " cannot be empty.");
+					return; // Stop the code right here until they fix it
+				}
+			}
+
+			try {
+				double newPrice = Double.parseDouble(newStrPrice);
+				int newStock = Integer.parseInt(newStrStock);
+
+				if (newPrice <= 0 || newStock < 0) {
+					return;
+				}
+
+				// 3. DATABASE UPDATE
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
 						java.sql.PreparedStatement preparedStatement = connection.prepareStatement(
 								"UPDATE Products SET product_name = ?, category = ?, price = ?, stock = ? WHERE product_name = ?")) {
 
 					preparedStatement.setString(1, newName);
-					preparedStatement.setString(2, newCat);
+					preparedStatement.setString(2, newCategory);
 					preparedStatement.setDouble(3, newPrice);
 					preparedStatement.setInt(4, newStock);
 					preparedStatement.setString(5, oldName);
@@ -601,57 +744,82 @@ public class InventoryMenu extends JFrame {
 					loadInventoryData();
 
 				} catch (Exception sqlEx) {
-					logger.error("Database error while editing", sqlEx);
-					javax.swing.JOptionPane.showMessageDialog(editDialog, "Error: Check if product name exists!");
+					logger.error("Database error while editing");
+					logger.debug("Database error while editing", sqlEx);
+					textLabel.setForeground(Color.RED);
+					textLabel.setText("Product name already exists.");
 				}
 			} catch (NumberFormatException numError) {
-				javax.swing.JOptionPane.showMessageDialog(editDialog, "Please enter valid numbers!");
+				textLabel.setForeground(Color.RED);
+				textLabel.setText("Please enter valid numbers.");
 			}
 		});
-
 		editDialog.setVisible(true);
 	}
 
 	private void deleteSelectedProducts() {
+
 		int[] selectedRows = inventoryTable.getSelectedRows();
 
 		if (selectedRows.length == 0) {
+
 			javax.swing.JOptionPane.showMessageDialog(this,
+
 					"Please select at least one product from the table to delete.");
+
 			return;
+
 		}
 
 		int confirm = javax.swing.JOptionPane.showConfirmDialog(this,
+
 				"Are you sure you want to delete " + selectedRows.length + " selected product(s)?", "Confirm Delete",
+
 				javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
 
 		if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+
 			// Using the central dbUrl
+
 			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
+
 					java.sql.PreparedStatement preparedstatement = connection
+
 							.prepareStatement("DELETE FROM Products WHERE product_name = ?")) {
 
 				for (int i = 0; i < selectedRows.length; i++) {
+
 					// IMPORTANT: Convert the table's visual row index back to the underlying
 					// model's data index!
-					// Because the user might be filtering/sorting the table, row 0 on the screen
-					// might not be row 0 in the data.
+
 					int modelRowIndex = inventoryTable.convertRowIndexToModel(selectedRows[i]);
+
 					String productName = tableModel.getValueAt(modelRowIndex, 0).toString();
 
 					preparedstatement.setString(1, productName);
+
 					preparedstatement.executeUpdate();
+
 					logger.info("Deleted product: " + productName);
+
 				}
 
 				loadInventoryData();
+
 				javax.swing.JOptionPane.showMessageDialog(this,
+
 						"Successfully deleted " + selectedRows.length + " item(s).");
 
 			} catch (Exception sqlEx) {
+
 				logger.error("Database error while deleting", sqlEx);
+
 				javax.swing.JOptionPane.showMessageDialog(this, "Error deleting products!");
+
 			}
+
 		}
+
 	}
+
 }

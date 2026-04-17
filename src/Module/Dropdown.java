@@ -34,7 +34,7 @@ public class Dropdown {
 	// Dropdown Menu System (might improve in the future)
 	public static JMenuBar createTopMenu(boolean isLoggedIn, String username, JFrame currentScreen) {
 		JMenuBar menuBar = new JMenuBar();
-		JMenu optionsMenu = new JMenu("≡ File");
+		JMenu optionsMenu = new JMenu("≡ Options");
 
 		if (isLoggedIn) {
 			// --- Account Creation and Removal Button (for admin only) ---
