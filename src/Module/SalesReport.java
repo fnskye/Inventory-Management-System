@@ -76,10 +76,7 @@ public class SalesReport extends JFrame {
 		setupBackendLogic();
 	}
 
-	// ---------------------------------------------------------
-	// --- UI ASSEMBLY -----------------------------------------
-	// ---------------------------------------------------------
-
+	// UI Assembly
 	private JPanel createHeaderPanel() {
 		JPanel topPanel = new JPanel(new BorderLayout());
 		JLabel titleLabel = new JLabel("Sales Report Menu", SwingConstants.CENTER);
@@ -91,7 +88,7 @@ public class SalesReport extends JFrame {
 	private JPanel createCenterPanel() {
 		JPanel centerPanel = new JPanel(new BorderLayout(0, 30));
 
-		// --- TOP: BUSINESS SUMMARY ---
+		// Top Panel
 		JPanel summaryWrapper = new JPanel(new BorderLayout(0, 10));
 		JLabel summaryTitle = new JLabel("B U S I N E S S   S U M M A R Y", SwingConstants.CENTER);
 		summaryTitle.setFont(new Font("Arial", Font.ITALIC | Font.BOLD, 18));
@@ -116,7 +113,7 @@ public class SalesReport extends JFrame {
 		summaryWrapper.add(summaryTitle, BorderLayout.NORTH);
 		summaryWrapper.add(summaryBox, BorderLayout.CENTER);
 
-		// --- BOTTOM: OVERALL TRANSACTION HISTORY ---
+		// Bottom Panel
 		JPanel tableWrapper = new JPanel(new BorderLayout(0, 10));
 		JLabel tableTitle = new JLabel("O V E R A L L   T R A N S A C T I O N   H I S T O R Y", SwingConstants.CENTER);
 		tableTitle.setFont(new Font("Arial", Font.ITALIC | Font.BOLD, 18));
@@ -177,15 +174,12 @@ public class SalesReport extends JFrame {
 		return bottomPanel;
 	}
 
-	// ---------------------------------------------------------
-	// --- FULL STACK BACKEND LOGIC ----------------------------
-	// ---------------------------------------------------------
-
+	// Backend Logic
 	private void setupBackendLogic() {
-		// 1. Load Data from SQLite Database
+		// Load Data from SQLite Database
 		loadSalesData();
 
-		// 2. Routing Logic
+		// Routing Logic
 		btnBack.addActionListener(e -> {
 			dispose();
 			Main.openMainMenu(loggedInUser, this);

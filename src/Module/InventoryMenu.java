@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +24,8 @@ import javax.swing.table.TableRowSorter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import Main.Main;
+
 public class InventoryMenu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -34,10 +37,10 @@ public class InventoryMenu extends JFrame {
 
 	// UI Components
 	private JTextField searchField;
-	private JTable inventoryTable; // UNCOMMENTED
-	private DefaultTableModel tableModel; // UNCOMMENTED
-	private TableRowSorter<DefaultTableModel> rowSorter; // ADDED FOR LIVE SEARCH
-	private JButton btnAdd, btnRestock, btnEdit, btnDelete;
+	private JTable inventoryTable;
+	private DefaultTableModel tableModel;
+	private TableRowSorter<DefaultTableModel> rowSorter; // Added for Live Search
+	private JButton buttonAdd, buttonRestock, buttonEdit, buttonDelete, buttonBack;
 
 	// Custom Colors
 	Color darkGray = new Color(0, 102, 102);
@@ -47,7 +50,7 @@ public class InventoryMenu extends JFrame {
 		logger.info("Checking User...");
 		this.loggedInUser = username;
 
-		// --- EXE-SAFE DATABASE URL SETUP ---
+		// .exe Safe Database Setup
 		String currentFolder = System.getProperty("user.dir");
 		this.dbUrl = "jdbc:sqlite:" + currentFolder + "/database.db";
 
@@ -58,20 +61,19 @@ public class InventoryMenu extends JFrame {
 
 		setJMenuBar(Dropdown.createTopMenu(true, this.loggedInUser, this));
 
-		// --- Modular UI Assembly ---
+		// Modular UI Assembly
 		add(createTopPanel(), BorderLayout.NORTH);
 		add(createTablePanel(), BorderLayout.CENTER);
 		add(createBottomPanel(), BorderLayout.SOUTH);
 
-		// --- LIVE SEARCH LOGIC ---
+		// Call Live Search Logic
 		setupLiveSearch();
 
 		setLocationRelativeTo(null);
 		loadInventoryData();
 	}
 
-	// --- Modular Methods for UI ---
-
+	// Modular Methods for UI
 	private JPanel createTopPanel() {
 		JPanel topPanel = new JPanel(new BorderLayout(5, 5));
 		topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
@@ -101,7 +103,7 @@ public class InventoryMenu extends JFrame {
 		return topPanel;
 	}
 
-	// Fixed Formatting.
+	// Fixed Formatting
 	private JScrollPane createTablePanel() {
 		String[] columns = { "Product Name", "Category", "Price", "Stock", "Status" };
 
@@ -114,7 +116,7 @@ public class InventoryMenu extends JFrame {
 
 		inventoryTable = new JTable(tableModel);
 
-		// --- LIVE SEARCH SORTER ATTACHED ---
+		// Live Search Logic
 		rowSorter = new TableRowSorter<>(tableModel);
 		inventoryTable.setRowSorter(rowSorter);
 
@@ -140,45 +142,74 @@ public class InventoryMenu extends JFrame {
 		return scrollPane;
 	}
 
-	// Fixed Formatting.
+	// Fixed Formatting
 	private JPanel createBottomPanel() {
-		JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		JPanel bottomPanel = new JPanel(new BorderLayout());
 
-		btnAdd = new JButton("Add Product");
-		btnRestock = new JButton("Restock");
-		btnEdit = new JButton("Edit");
-		btnDelete = new JButton("Delete");
+		// Action Panel in the Center
+		JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+
+		buttonAdd = new JButton("Add Product");
+		buttonRestock = new JButton("Restock");
+		buttonEdit = new JButton("Edit");
+		buttonDelete = new JButton("Delete");
 
 		// Delete Button Specific Style
-		btnDelete.setPreferredSize(new Dimension(150, 40));
-		btnDelete.setBackground(Color.red);
-		btnDelete.setForeground(Color.WHITE);
-		btnDelete.setFocusPainted(false);
+		buttonDelete.setPreferredSize(new Dimension(150, 40));
+		buttonDelete.setBackground(Color.red);
+		buttonDelete.setForeground(Color.WHITE);
+		buttonDelete.setFocusPainted(false);
 
-		// General Button Styling
-		styleButton(btnAdd);
-		styleButton(btnRestock);
-		styleButton(btnEdit);
+		// Style main buttons
+		styleButton(buttonAdd);
+		styleButton(buttonRestock);
+		styleButton(buttonEdit);
 
-		// Wiring up the Actions
-		btnAdd.addActionListener(e -> openAddProductWindow());
-		btnRestock.addActionListener(e -> restockProduct());
-		btnEdit.addActionListener(e -> openEditProductWindow());
-		btnDelete.addActionListener(e -> deleteSelectedProducts());
+		// Wire up main actions
+		buttonAdd.addActionListener(e -> openAddProductWindow());
+		buttonRestock.addActionListener(e -> restockProduct());
+		buttonEdit.addActionListener(e -> openEditProductWindow());
+		buttonDelete.addActionListener(e -> deleteSelectedProducts());
 
-		bottomPanel.add(btnAdd);
-		bottomPanel.add(btnRestock);
-		bottomPanel.add(btnEdit);
-		bottomPanel.add(btnDelete);
+		// Add main buttons to their specific panel
+		actionPanel.add(buttonAdd);
+		actionPanel.add(buttonRestock);
+		actionPanel.add(buttonEdit);
+		actionPanel.add(buttonDelete);
+
+		// Back Button Panel
+		JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 20));
+		buttonBack = new JButton("Back");
+		styleButton(buttonBack);
+		buttonBack.addActionListener(e -> {
+			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm",
+					JOptionPane.YES_NO_OPTION);
+			if (confirmation == JOptionPane.YES_OPTION) {
+				logger.info("Returning to Main Menu...");
+				dispose();
+				Main.openMainMenu(loggedInUser, this);
+			}
+		});
+		rightPanel.add(buttonBack);
+
+		// balances the UI
+		JPanel leftSpacer = new JPanel();
+		leftSpacer.setPreferredSize(new Dimension(190, 40));
+		leftSpacer.setOpaque(false); // Make it invisible
+
+		// 4. COMBINE
+		bottomPanel.add(leftSpacer, BorderLayout.WEST);
+		bottomPanel.add(actionPanel, BorderLayout.CENTER); // Action button
+		bottomPanel.add(rightPanel, BorderLayout.EAST); // Back button
 
 		return bottomPanel;
 	}
 
-	private void styleButton(JButton btn) {
-		btn.setPreferredSize(new Dimension(150, 40));
-		btn.setBackground(darkGray);
-		btn.setForeground(Color.WHITE);
-		btn.setFocusPainted(false);
+	private void styleButton(JButton button) {
+		button.setPreferredSize(new Dimension(150, 40));
+		button.setBackground(darkGray);
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false);
 	}
 
 	// --- Live Search Implementation ---

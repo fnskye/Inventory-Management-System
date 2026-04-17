@@ -82,10 +82,7 @@ public class OrderMenu extends JFrame {
 		loadAvailableProducts();
 	}
 
-	// ---------------------------------------------------------
-	// --- UI ASSEMBLY -----------------------------------------
-	// ---------------------------------------------------------
-
+	// UI Assembly
 	private JPanel createHeaderPanel() {
 		JPanel topPanel = new JPanel(new BorderLayout());
 		JLabel titleLabel = new JLabel("Order Menu", SwingConstants.CENTER);
@@ -97,7 +94,7 @@ public class OrderMenu extends JFrame {
 	private JPanel createCenterSplitPanel() {
 		JPanel splitPanel = new JPanel(new GridLayout(1, 2, 20, 0));
 
-		// --- LEFT SIDE: Available Products (Database connected) ---
+		// Left Side Panel: Products
 		JPanel leftPanel = new JPanel(new BorderLayout(0, 10));
 
 		searchField = new JTextField();
@@ -124,7 +121,7 @@ public class OrderMenu extends JFrame {
 		leftPanel.add(new JScrollPane(availableItemsTable), BorderLayout.CENTER);
 		leftPanel.add(btnAddToCart, BorderLayout.SOUTH);
 
-		// --- RIGHT SIDE: Shopping Cart ---
+		// Right Side: Shopping Cart
 		JPanel rightPanel = new JPanel(new BorderLayout(0, 10));
 
 		JLabel summaryTitle = new JLabel("Order Summary");
@@ -195,12 +192,9 @@ public class OrderMenu extends JFrame {
 		btn.setFocusPainted(false);
 	}
 
-	// ---------------------------------------------------------
-	// --- FULL STACK BACKEND LOGIC ----------------------------
-	// ---------------------------------------------------------
-
+	// Backend Logic
 	private void setupBackendLogic() {
-		// 1. Live Search functionality
+		// Live Search functionality
 		searchField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
@@ -226,7 +220,7 @@ public class OrderMenu extends JFrame {
 			}
 		});
 
-		// 2. Add to Cart Logic (UPDATED WITH QUANTITY PROMPT)
+		// Add to Cart Logic
 		btnAddToCart.addActionListener(e -> {
 			int selectedRow = availableItemsTable.getSelectedRow();
 			if (selectedRow == -1) {
@@ -264,7 +258,7 @@ public class OrderMenu extends JFrame {
 			String input = JOptionPane.showInputDialog(this, "Enter quantity to add (Max: " + maxAllowedToAdd + "):",
 					"Quantity", JOptionPane.QUESTION_MESSAGE);
 
-			// If user clicks Cancel or closes the dialog, just do nothing
+			// If user clicks cancel or closes the dialog, just do nothing
 			if (input == null || input.trim().isEmpty()) {
 				return;
 			}
@@ -272,13 +266,13 @@ public class OrderMenu extends JFrame {
 			try {
 				int qtyToAdd = Integer.parseInt(input.trim());
 
-				// Validation: Prevent negative numbers or zero
+				// Prevent negative numbers or zero
 				if (qtyToAdd <= 0) {
 					JOptionPane.showMessageDialog(this, "Please enter a valid quantity greater than 0.");
 					return;
 				}
 
-				// Validation: Prevent exceeding stock
+				// Prevent exceeding stock
 				if (qtyToAdd > maxAllowedToAdd) {
 					JOptionPane.showMessageDialog(this,
 							"Cannot add " + qtyToAdd + ". Only " + maxAllowedToAdd + " left in stock.");
@@ -300,12 +294,12 @@ public class OrderMenu extends JFrame {
 				updateTotal();
 
 			} catch (NumberFormatException ex) {
-				// Validation: Prevent user from typing letters like "abc"
+				// Prevent user from typing letters
 				JOptionPane.showMessageDialog(this, "Invalid input. Please enter a whole number.");
 			}
 		});
 
-		// 3. Remove from Cart Logic
+		// Remove from Cart Logic
 		btnRemoveFromCart.addActionListener(e -> {
 			int selectedRow = cartTable.getSelectedRow();
 			if (selectedRow == -1) {
@@ -316,7 +310,7 @@ public class OrderMenu extends JFrame {
 			updateTotal();
 		});
 
-		// 4. Checkout Logic
+		// Checkout Logic
 		btnCheckout.addActionListener(e -> {
 			if (cartModel.getRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "Cart is empty!");
@@ -326,8 +320,13 @@ public class OrderMenu extends JFrame {
 		});
 
 		btnCancel.addActionListener(e -> {
-			dispose();
-			Main.openMainMenu(loggedInUser, this);
+			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm",
+					JOptionPane.YES_NO_OPTION);
+			if (confirmation == JOptionPane.YES_OPTION) {
+				logger.info("Returning to Main Menu...");
+				dispose();
+				Main.openMainMenu(loggedInUser, this);
+			}
 		});
 	}
 
@@ -341,8 +340,8 @@ public class OrderMenu extends JFrame {
 
 	private void loadAvailableProducts() {
 		availableItemsModel.setRowCount(0);
-		try (Connection conn = DriverManager.getConnection(dbUrl);
-				Statement stmt = conn.createStatement();
+		try (Connection connection = DriverManager.getConnection(dbUrl);
+				Statement stmt = connection.createStatement();
 				ResultSet rs = stmt.executeQuery("SELECT product_name, price, stock FROM Products WHERE stock > 0")) {
 
 			while (rs.next()) {
@@ -354,10 +353,7 @@ public class OrderMenu extends JFrame {
 		}
 	}
 
-	// ---------------------------------------------------------
-	// --- CHECKOUT & RECEIPT POPUPS ---------------------------
-	// ---------------------------------------------------------
-
+	// Checkout & Receipts Pop Up
 	private void showCheckoutDetailsPopup() {
 		javax.swing.JDialog detailsDialog = new javax.swing.JDialog(this, "Checkout Details", true);
 		detailsDialog.setSize(400, 250);
@@ -402,12 +398,12 @@ public class OrderMenu extends JFrame {
 				return;
 			}
 
-			// --- DATABASE TRANSACTION: DEDUCT STOCK & SAVE SALE ---
-			try (Connection conn = DriverManager.getConnection(dbUrl)) {
-				conn.setAutoCommit(false);
+			// Database Transaction Deduct Stock & Save File
+			try (Connection connection = DriverManager.getConnection(dbUrl)) {
+				connection.setAutoCommit(false);
 
-				// 1. Deduct the stock
-				try (PreparedStatement psStock = conn
+				// Deduct the stock
+				try (PreparedStatement psStock = connection
 						.prepareStatement("UPDATE Products SET stock = stock - ? WHERE product_name = ?")) {
 					for (int i = 0; i < cartModel.getRowCount(); i++) {
 						int qtyToDeduct = Integer.parseInt(cartModel.getValueAt(i, 1).toString());
@@ -419,11 +415,11 @@ public class OrderMenu extends JFrame {
 					}
 				}
 
-				// 2. Save the sale to the new Transactions table
+				// Save the sale to the new Transactions table
 				String orderId = "ORD-" + System.currentTimeMillis();
 				String dateToday = java.time.LocalDate.now().toString();
 
-				try (PreparedStatement psSale = conn.prepareStatement(
+				try (PreparedStatement psSale = connection.prepareStatement(
 						"INSERT INTO Transactions (order_date, order_number, customer_name, total_amount) VALUES (?, ?, ?, ?)")) {
 					psSale.setString(1, dateToday);
 					psSale.setString(2, orderId);
@@ -432,7 +428,7 @@ public class OrderMenu extends JFrame {
 					psSale.executeUpdate();
 				}
 
-				conn.commit(); // Save both the stock deduction AND the new sale
+				connection.commit(); // Save both the stock deduction and the new sale
 				logger.info("Order processed successfully. Stock deducted and sale recorded.");
 
 			} catch (Exception sqlError) {
@@ -458,7 +454,7 @@ public class OrderMenu extends JFrame {
 		receiptText.setFont(new Font("Courier New", Font.PLAIN, 14));
 		receiptText.setMargin(new java.awt.Insets(20, 20, 20, 20));
 
-		// --- DYNAMIC RECEIPT GENERATION ---
+		// Dynamic Receipt
 		StringBuilder sb = new StringBuilder();
 		sb.append("                        CodeFlux Supplier\n");
 		sb.append("                      123 BGC, Taguig City\n");
@@ -532,25 +528,25 @@ public class OrderMenu extends JFrame {
 
 		// Dynamic Window Size
 
-		// 1. Count how many physical lines of text are in the receipt
+		// Count how many physical lines of text are in the receipt
 		int lineCount = sb.toString().split("\n").length;
 
-		// 2. Calculate height: ~18 pixels per line of text + 150 pixels for
+		// Calculate height: ~18 pixels per line of text + 150 pixels for
 		// padding/buttons
 		int calculatedHeight = (lineCount * 18) + 150;
 
-		// 3. Safety Net: Ask the OS for the monitor's screen height so it doesn't go
+		// Ask the OS for the monitor's screen height so it doesn't go
 		// off-screen
 		int maxScreenHeight = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height - 100;
 
-		// 4. Use whichever is smaller: the receipt height, or the max screen height
+		// Use whichever is smaller: the receipt height, or the max screen height
 		int finalHeight = Math.min(calculatedHeight, maxScreenHeight);
 
 		// Apply the dynamic size and center it
 		invoiceDialog.setSize(615, finalHeight);
 		invoiceDialog.setLocationRelativeTo(this);
 
-		// Finally, show the window
+		// show the window
 		invoiceDialog.setVisible(true);
 	}
 }
