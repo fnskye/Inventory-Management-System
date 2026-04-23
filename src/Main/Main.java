@@ -17,10 +17,14 @@ public class Main {
 	// Global User Tracker
 	public static String currentUser = null;
 
+	// Global Currency Tracker
+	public static String currencySymbol = "₱";
+
 	// Initialize the logger for this specific class
 	private static final Logger logger = LogManager.getLogger(Main.class);
 
 	public static void main(String[] args) throws InterruptedException {
+
 		// --- Main Module + Logger Module ---
 		Thread.sleep(1500);
 		logger.info("---------------------------------------------");
@@ -33,6 +37,9 @@ public class Main {
 			Thread.sleep(300);
 			logger.info("Initializing...");
 			InitializeDatabase.initializeDatabase();
+			Thread.sleep(50);
+			logger.info("Loading Global Settings...");
+			loadGlobalSettings();
 
 		} catch (Exception e) {
 			logger.error("Failed to load database.", e);
@@ -175,5 +182,23 @@ public class Main {
 		timer.start(); // Calls the timer for 1.5 seconds then run the logout dispose window
 
 		logoutDialog.setVisible(true); // Pauses the rest of the code from running until the dialog is closed
+	}
+
+	public static void loadGlobalSettings() {
+		String currentFolder = System.getProperty("user.dir");
+		String dbUrl = "jdbc:sqlite:" + currentFolder + "/database.db";
+
+		try (java.sql.Connection connection = java.sql.DriverManager.getConnection(dbUrl);
+				java.sql.Statement statement = connection.createStatement();
+				java.sql.ResultSet resultset = statement
+						.executeQuery("SELECT setting_value FROM Settings WHERE setting_key = 'currency'")) {
+
+			if (resultset.next()) {
+				currencySymbol = resultset.getString("setting_value");
+				logger.info("Loaded global currency symbol: " + currencySymbol);
+			}
+		} catch (Exception e) {
+			logger.error("Failed to load settings.", e);
+		}
 	}
 }

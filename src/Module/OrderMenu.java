@@ -48,14 +48,14 @@ public class OrderMenu extends JFrame {
 	public DefaultTableModel availableItemsModel, cartModel;
 	public TableRowSorter<DefaultTableModel> rowSorter;
 	public JLabel totalAmountLabel;
-	public JButton btnCheckout, btnCancel, btnAddToCart, btnRemoveFromCart;
+	public JButton buttonCheckout, buttonCancel, buttonAddToCart, buttonRemoveFromCart;
 
 	// Custom Colors
 	Color darkGray = new Color(0, 102, 102);
 	Color slateGray = new Color(105, 115, 132);
 
 	public OrderMenu(String username) {
-		logger.info("Initializing Final Order Menu for user: " + username);
+		logger.info("Initializing Order Menu for user: " + username);
 		this.loggedInUser = username;
 
 		// Setup EXE-Safe Database Connection
@@ -101,7 +101,7 @@ public class OrderMenu extends JFrame {
 		searchField.setPreferredSize(new Dimension(400, 35));
 		searchField.setBorder(BorderFactory.createTitledBorder("Search Products"));
 
-		String[] availableCols = { "Item Name", "Price", "Stock" };
+		String[] availableCols = { "Item Name", "Price", "Stock", "Unit" };
 		availableItemsModel = new DefaultTableModel(availableCols, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -114,12 +114,12 @@ public class OrderMenu extends JFrame {
 		rowSorter = new TableRowSorter<>(availableItemsModel);
 		availableItemsTable.setRowSorter(rowSorter);
 
-		btnAddToCart = new JButton("Add Selected to Cart ->");
-		styleButton(btnAddToCart);
+		buttonAddToCart = new JButton("Add Selected to Cart ->");
+		styleButton(buttonAddToCart);
 
 		leftPanel.add(searchField, BorderLayout.NORTH);
 		leftPanel.add(new JScrollPane(availableItemsTable), BorderLayout.CENTER);
-		leftPanel.add(btnAddToCart, BorderLayout.SOUTH);
+		leftPanel.add(buttonAddToCart, BorderLayout.SOUTH);
 
 		// Right Side: Shopping Cart
 		JPanel rightPanel = new JPanel(new BorderLayout(0, 10));
@@ -127,7 +127,7 @@ public class OrderMenu extends JFrame {
 		JLabel summaryTitle = new JLabel("Order Summary");
 		summaryTitle.setFont(new Font("Arial", Font.BOLD, 18));
 
-		String[] cartCols = { "Item Name", "Qty", "Unit Price", "Line Total" };
+		String[] cartCols = { "Item Name", "Qty", "Unit", "Unit Price", "Line Total" };
 		cartModel = new DefaultTableModel(cartCols, 0) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -137,16 +137,16 @@ public class OrderMenu extends JFrame {
 		cartTable = new JTable(cartModel);
 		styleTable(cartTable);
 
-		btnRemoveFromCart = new JButton("<- Remove Selected");
-		btnRemoveFromCart.setBackground(Color.RED);
-		btnRemoveFromCart.setForeground(Color.WHITE);
-		btnRemoveFromCart.setFocusPainted(false);
+		buttonRemoveFromCart = new JButton("<- Remove Selected");
+		buttonRemoveFromCart.setBackground(Color.RED);
+		buttonRemoveFromCart.setForeground(Color.WHITE);
+		buttonRemoveFromCart.setFocusPainted(false);
 
 		JPanel cartBottomPanel = new JPanel(new BorderLayout());
-		totalAmountLabel = new JLabel("Total: ₱ 0.00", SwingConstants.RIGHT);
+		totalAmountLabel = new JLabel("Total: " + Main.currencySymbol + " 0.00", SwingConstants.RIGHT);
 		totalAmountLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
-		cartBottomPanel.add(btnRemoveFromCart, BorderLayout.WEST);
+		cartBottomPanel.add(buttonRemoveFromCart, BorderLayout.WEST);
 		cartBottomPanel.add(totalAmountLabel, BorderLayout.EAST);
 
 		rightPanel.add(summaryTitle, BorderLayout.NORTH);
@@ -161,13 +161,13 @@ public class OrderMenu extends JFrame {
 
 	private JPanel createBottomPanel() {
 		JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
-		btnCancel = new JButton("Cancel");
-		styleButton(btnCancel);
-		btnCheckout = new JButton("Checkout");
-		styleButton(btnCheckout);
+		buttonCancel = new JButton("Cancel");
+		styleButton(buttonCancel);
+		buttonCheckout = new JButton("Checkout");
+		styleButton(buttonCheckout);
 
-		bottomPanel.add(btnCheckout);
-		bottomPanel.add(btnCancel);
+		bottomPanel.add(buttonCheckout);
+		bottomPanel.add(buttonCancel);
 		return bottomPanel;
 	}
 
@@ -177,19 +177,40 @@ public class OrderMenu extends JFrame {
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
 		table.getTableHeader().setPreferredSize(new Dimension(0, 40));
 		table.getTableHeader().setReorderingAllowed(false);
+
 		javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+		javax.swing.table.DefaultTableCellRenderer priceRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+			@Override
+			public void setValue(Object value) {
+				if (value instanceof Double) {
+					setText(String.format("%s %,.2f", Main.currencySymbol, (Double) value));
+				} else {
+					super.setValue(value);
+				}
+			}
+		};
+		priceRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
 		for (int i = 0; i < table.getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+			String columnName = table.getColumnName(i).toLowerCase();
+
+			if (columnName.contains("price") || columnName.contains("total")) {
+				table.getColumnModel().getColumn(i).setCellRenderer(priceRenderer);
+			} else {
+				table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+			}
 		}
+
 		table.setFillsViewportHeight(true);
 	}
 
-	private void styleButton(JButton btn) {
-		btn.setPreferredSize(new Dimension(180, 40));
-		btn.setBackground(darkGray);
-		btn.setForeground(Color.WHITE);
-		btn.setFocusPainted(false);
+	private void styleButton(JButton button) {
+		button.setPreferredSize(new Dimension(180, 40));
+		button.setBackground(darkGray);
+		button.setForeground(Color.WHITE);
+		button.setFocusPainted(false);
 	}
 
 	// Backend Logic
@@ -221,7 +242,7 @@ public class OrderMenu extends JFrame {
 		});
 
 		// Add to Cart Logic
-		btnAddToCart.addActionListener(e -> {
+		buttonAddToCart.addActionListener(e -> {
 			int selectedRow = availableItemsTable.getSelectedRow();
 			if (selectedRow == -1) {
 				JOptionPane.showMessageDialog(this, "Select an item to add.");
@@ -233,6 +254,7 @@ public class OrderMenu extends JFrame {
 			String itemName = availableItemsModel.getValueAt(modelRow, 0).toString();
 			double price = Double.parseDouble(availableItemsModel.getValueAt(modelRow, 1).toString());
 			int stock = Integer.parseInt(availableItemsModel.getValueAt(modelRow, 2).toString());
+			String unitType = availableItemsModel.getValueAt(modelRow, 3).toString();
 
 			// Find current quantity already sitting in the cart
 			int currentQtyInCart = 0;
@@ -287,7 +309,7 @@ public class OrderMenu extends JFrame {
 					cartModel.setValueAt(newTotalQty * price, cartRowIndex, 3);
 				} else {
 					// Add brand new row
-					cartModel.addRow(new Object[] { itemName, qtyToAdd, price, price * qtyToAdd });
+					cartModel.addRow(new Object[] { itemName, qtyToAdd, unitType, price, price * qtyToAdd });
 				}
 
 				// Recalculate grand total
@@ -300,7 +322,7 @@ public class OrderMenu extends JFrame {
 		});
 
 		// Remove from Cart Logic
-		btnRemoveFromCart.addActionListener(e -> {
+		buttonRemoveFromCart.addActionListener(e -> {
 			int selectedRow = cartTable.getSelectedRow();
 			if (selectedRow == -1) {
 				JOptionPane.showMessageDialog(this, "Select an item in the cart to remove.");
@@ -311,7 +333,7 @@ public class OrderMenu extends JFrame {
 		});
 
 		// Checkout Logic
-		btnCheckout.addActionListener(e -> {
+		buttonCheckout.addActionListener(e -> {
 			if (cartModel.getRowCount() == 0) {
 				JOptionPane.showMessageDialog(this, "Cart is empty!");
 				return;
@@ -319,7 +341,7 @@ public class OrderMenu extends JFrame {
 			showCheckoutDetailsPopup();
 		});
 
-		btnCancel.addActionListener(e -> {
+		buttonCancel.addActionListener(e -> {
 			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm",
 					JOptionPane.YES_NO_OPTION);
 			if (confirmation == JOptionPane.YES_OPTION) {
@@ -333,20 +355,21 @@ public class OrderMenu extends JFrame {
 	private void updateTotal() {
 		grandTotal = 0.0;
 		for (int i = 0; i < cartModel.getRowCount(); i++) {
-			grandTotal += Double.parseDouble(cartModel.getValueAt(i, 3).toString());
+			grandTotal += Double.parseDouble(cartModel.getValueAt(i, 4).toString());
 		}
-		totalAmountLabel.setText(String.format("Total: ₱%,.2f", grandTotal));
+		totalAmountLabel.setText(String.format("Total: %s %,.2f", Main.currencySymbol, grandTotal));
 	}
 
 	private void loadAvailableProducts() {
 		availableItemsModel.setRowCount(0);
 		try (Connection connection = DriverManager.getConnection(dbUrl);
-				Statement stmt = connection.createStatement();
-				ResultSet rs = stmt.executeQuery("SELECT product_name, price, stock FROM Products WHERE stock > 0")) {
+				Statement statement = connection.createStatement();
+				ResultSet resultset = statement
+						.executeQuery("SELECT product_name, price, stock, unit_type FROM Products WHERE stock > 0")) {
 
-			while (rs.next()) {
-				availableItemsModel.addRow(
-						new Object[] { rs.getString("product_name"), rs.getDouble("price"), rs.getInt("stock") });
+			while (resultset.next()) {
+				availableItemsModel.addRow(new Object[] { resultset.getString("product_name"),
+						resultset.getDouble("price"), resultset.getInt("stock"), resultset.getString("unit_type") });
 			}
 		} catch (Exception e) {
 			logger.error("Failed to load products for ordering.", e);
@@ -390,10 +413,10 @@ public class OrderMenu extends JFrame {
 		styleButton(proceedButton);
 
 		proceedButton.addActionListener(e -> {
-			String cName = nameField.getText().trim();
-			String cPhone = phoneField.getText().trim();
+			String customerName = nameField.getText().trim();
+			String customerPhone = phoneField.getText().trim();
 
-			if (cName.isEmpty() || cPhone.isEmpty()) {
+			if (customerName.isEmpty() || customerPhone.isEmpty()) {
 				JOptionPane.showMessageDialog(detailsDialog, "Please fill in all fields.");
 				return;
 			}
@@ -423,7 +446,7 @@ public class OrderMenu extends JFrame {
 						"INSERT INTO Transactions (order_date, order_number, customer_name, total_amount) VALUES (?, ?, ?, ?)")) {
 					psSale.setString(1, dateToday);
 					psSale.setString(2, orderId);
-					psSale.setString(3, cName);
+					psSale.setString(3, customerName);
 					psSale.setDouble(4, grandTotal);
 					psSale.executeUpdate();
 				}
@@ -438,7 +461,7 @@ public class OrderMenu extends JFrame {
 			}
 
 			detailsDialog.dispose();
-			showBillingInvoicePopup(cName, cPhone);
+			showBillingInvoicePopup(customerName, customerPhone);
 		});
 
 		detailsDialog.add(proceedButton, gbc);
@@ -461,33 +484,41 @@ public class OrderMenu extends JFrame {
 		sb.append("                      Contact: +63993576808\n");
 		sb.append("=================================================================\n");
 
-		String orderId = "ORD-" + System.currentTimeMillis(); // Simple auto-generated ID
-		sb.append(String.format("Order #: %-25s Date: %s\n", orderId, java.time.LocalDate.now().toString()));
-		sb.append(String.format("Customer Name: %-19s Contact #: %s\n", customerName, customerPhone));
-		sb.append("-----------------------------------------------------------------\n");
-		sb.append(String.format("%-4s %-30s %13s %15s\n", "Qty", "Item Description", "Unit Price", "Amount"));
+		String orderId = "ORD-" + System.currentTimeMillis();
+		String dateToday = java.time.LocalDate.now().toString();
+
+		sb.append(String.format("%-40s %24s\n", "Order #: " + orderId, "Date: " + dateToday));
+		sb.append(String.format("%-40s %24s\n", "Customer Name: " + customerName, "Contact #: " + customerPhone));
+		sb.append(String.format("Served By: %s\n", this.loggedInUser));
+
 		sb.append("-----------------------------------------------------------------\n");
 
-		// Loop through the cart and add every item to the receipt
+		sb.append(String.format("%-10s %-24s %13s %15s\n", "Qty/Unit", "Item Description", "Unit Price", "Amount"));
+		sb.append("-----------------------------------------------------------------\n");
+
 		for (int i = 0; i < cartModel.getRowCount(); i++) {
 			String qty = cartModel.getValueAt(i, 1).toString();
+			String unit = cartModel.getValueAt(i, 2).toString();
 
-			// Truncate long names so they don't break the layout
 			String itemName = cartModel.getValueAt(i, 0).toString();
-			if (itemName.length() > 28)
-				itemName = itemName.substring(0, 25) + "...";
+			if (itemName.length() > 24) {
+				itemName = itemName.substring(0, 21) + "...";
+			}
 
-			double unitPrice = Double.parseDouble(cartModel.getValueAt(i, 2).toString());
-			double lineTotal = Double.parseDouble(cartModel.getValueAt(i, 3).toString());
+			double unitPrice = Double.parseDouble(cartModel.getValueAt(i, 3).toString());
+			double lineTotal = Double.parseDouble(cartModel.getValueAt(i, 4).toString());
 
-			String formattedPrice = String.format("PHP %,.2f", unitPrice);
-			String formattedTotal = String.format("PHP %,.2f", lineTotal);
+			String formattedPrice = String.format("%s %,.2f", Main.currencySymbol, unitPrice);
+			String formattedTotal = String.format("%s %,.2f", Main.currencySymbol, lineTotal);
 
-			sb.append(String.format("%-4s %-30s %13s %15s\n", qty, itemName, formattedPrice, formattedTotal));
+			String qtyWithUnit = qty + " " + unit;
+
+			sb.append(String.format("%-10s %-24s %13s %15s\n", qtyWithUnit, itemName, formattedPrice, formattedTotal));
 		}
 
 		sb.append("-----------------------------------------------------------------\n");
-		sb.append(String.format("%49s %15s\n", "TOTAL AMOUNT DUE:", String.format("PHP %,.2f", grandTotal)));
+		sb.append(String.format("%49s %15s\n", "TOTAL AMOUNT DUE:",
+				String.format("%s %,.2f", Main.currencySymbol, grandTotal)));
 		sb.append("=================================================================\n\n");
 		sb.append("                 Print generated by the system.\n");
 
@@ -497,42 +528,38 @@ public class OrderMenu extends JFrame {
 		scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-		JButton btnPrint = new JButton("Print");
-		JButton btnSave = new JButton("Save");
-		btnPrint.setPreferredSize(new Dimension(120, 40));
-		btnSave.setPreferredSize(new Dimension(120, 40));
-		btnPrint.setBackground(slateGray);
-		btnPrint.setForeground(Color.WHITE);
-		btnSave.setBackground(slateGray);
-		btnSave.setForeground(Color.WHITE);
+		JButton buttonPrint = new JButton("Print");
+		JButton buttonSave = new JButton("Save");
+		buttonPrint.setPreferredSize(new Dimension(120, 40));
+		buttonSave.setPreferredSize(new Dimension(120, 40));
+		buttonPrint.setBackground(slateGray);
+		buttonPrint.setForeground(Color.WHITE);
+		buttonSave.setBackground(slateGray);
+		buttonSave.setForeground(Color.WHITE);
 
-		btnPrint.addActionListener(e -> {
-			JOptionPane.showMessageDialog(invoiceDialog, "Print Successful!\nReturn to Main Menu");
+		buttonPrint.addActionListener(e -> {
+			JOptionPane.showMessageDialog(invoiceDialog, "Print Successful!");
 			invoiceDialog.dispose();
 			dispose(); // Close Order Menu
 			Main.openMainMenu(this.loggedInUser, this);
 		});
 
-		btnSave.addActionListener(e -> {
-			JOptionPane.showMessageDialog(invoiceDialog, "Saved as text.\nReturn to Main Menu");
+		buttonSave.addActionListener(e -> {
+			JOptionPane.showMessageDialog(invoiceDialog, "Saved as text.");
 			invoiceDialog.dispose();
 			dispose(); // Close Order Menu
 			Main.openMainMenu(this.loggedInUser, this);
 		});
 
-		buttonPanel.add(btnPrint);
-		buttonPanel.add(btnSave);
+		buttonPanel.add(buttonPrint);
+		buttonPanel.add(buttonSave);
 
 		invoiceDialog.add(scrollPane, BorderLayout.CENTER);
 		invoiceDialog.add(buttonPanel, BorderLayout.SOUTH);
 
-		// Dynamic Window Size
-
 		// Count how many physical lines of text are in the receipt
 		int lineCount = sb.toString().split("\n").length;
 
-		// Calculate height: ~18 pixels per line of text + 150 pixels for
-		// padding/buttons
 		int calculatedHeight = (lineCount * 18) + 150;
 
 		// Ask the OS for the monitor's screen height so it doesn't go
@@ -546,7 +573,7 @@ public class OrderMenu extends JFrame {
 		invoiceDialog.setSize(615, finalHeight);
 		invoiceDialog.setLocationRelativeTo(this);
 
-		// show the window
+		// Show the window
 		invoiceDialog.setVisible(true);
 	}
 }

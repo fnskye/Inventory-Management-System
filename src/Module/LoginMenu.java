@@ -28,6 +28,8 @@ import org.apache.logging.log4j.Logger;
 // include classes outside the package
 import Database.InitializeDatabase;
 import Main.Main;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 public class LoginMenu extends JFrame {
 
@@ -130,7 +132,7 @@ public class LoginMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String username = usernameField.getText();
-				String password = new String(passwordField.getPassword());
+				char[] password = passwordField.getPassword();
 
 				// 1. Create a simple loading popup
 				javax.swing.JDialog loadingDialog = new javax.swing.JDialog(LoginMenu.this, "Authenticating", true);
@@ -172,22 +174,48 @@ public class LoginMenu extends JFrame {
 			}
 
 			// Checking the user in the database
-			private boolean authenticateUser(String enteredUsername, String enteredPassword) {
-				String sql = "SELECT * FROM Users WHERE username = ? AND password = ?";
+			private boolean authenticateUser(String enteredUsername, char[] enteredPassword) {
+
+				String validateEnteredUsername = enteredUsername;
+				char[] validateEnteredPasswordCharacters = enteredPassword;
+
+				if (validateEnteredUsername.isEmpty() || validateEnteredPasswordCharacters.length == 0) {
+					return false;
+				}
+
+				String sql = "SELECT password FROM Users WHERE username = ?";
+
 				try (java.sql.Connection connection = InitializeDatabase.getConnection();
 						java.sql.PreparedStatement preparedstatement = connection.prepareStatement(sql)) {
 
 					preparedstatement.setString(1, enteredUsername);
-					preparedstatement.setString(2, enteredPassword);
 
 					java.sql.ResultSet resultset = preparedstatement.executeQuery();
-					return resultset.next();
 
+					if (resultset.next()) {
+						// Grab the user's password massive hash from the database
+						String storedPasswordHash = resultset.getString("password");
+
+						Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+
+						// Comparing the password with argon2 algorithm
+						boolean passwordMatch = argon2.verify(storedPasswordHash, validateEnteredPasswordCharacters);
+
+						// Wipe the typed password from memory so no one can access it
+						argon2.wipeArray(enteredPassword);
+						argon2.wipeArray(validateEnteredPasswordCharacters);
+
+						return passwordMatch;
+					}
 				} catch (java.sql.SQLException ex) {
-					System.out.println("Database login error: " + ex.getMessage());
+					logger.info("Database login error: " + ex.getMessage());
 					return false;
 				}
+
+				// Default return if the user isn't found or the database crashes
+				return false;
 			}
 		});
+
 	}
 }

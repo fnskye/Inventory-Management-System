@@ -105,7 +105,7 @@ public class InventoryMenu extends JFrame {
 
 	// Fixed Formatting
 	private JScrollPane createTablePanel() {
-		String[] columns = { "Product Name", "Category", "Price", "Stock", "Status" };
+		String[] columns = { "Product Name", "Category", "Price", "Stock", "Unit", "Status" };
 
 		tableModel = new DefaultTableModel(columns, 0) {
 			@Override
@@ -127,12 +127,35 @@ public class InventoryMenu extends JFrame {
 		inventoryTable.getTableHeader().setPreferredSize(new Dimension(0, 40));
 		inventoryTable.getTableHeader().setReorderingAllowed(false);
 
-		// Centering
+		// Center Renderer
 		javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
-		centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
-		for (int i = 0; i < 5; i++) {
-			inventoryTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+		// Custom Price Renderer
+		javax.swing.table.DefaultTableCellRenderer priceRenderer = new javax.swing.table.DefaultTableCellRenderer() {
+			@Override
+			public void setValue(Object value) {
+				if (value instanceof Double) {
+					setText(String.format("%s %,.2f", Main.currencySymbol, (Double) value));
+				} else {
+					super.setValue(value);
+				}
+			}
+		};
+		priceRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+		// Apply the specific renderer to the columns
+		for (int i = 0; i < inventoryTable.getColumnCount(); i++) {
+			String colName = inventoryTable.getColumnName(i).toLowerCase();
+
+			if (colName.contains("price")) {
+				inventoryTable.getColumnModel().getColumn(i).setCellRenderer(priceRenderer);
+			} else {
+				inventoryTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+			}
 		}
+
+		inventoryTable.setFillsViewportHeight(true);
 
 		inventoryTable.setFillsViewportHeight(true);
 
@@ -182,7 +205,7 @@ public class InventoryMenu extends JFrame {
 		buttonBack = new JButton("Back");
 		styleButton(buttonBack);
 		buttonBack.addActionListener(e -> {
-			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to cancel?", "Confirm",
+			int confirmation = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back?", "Confirm",
 					JOptionPane.YES_NO_OPTION);
 			if (confirmation == JOptionPane.YES_OPTION) {
 				logger.info("Returning to Main Menu...");
@@ -256,6 +279,7 @@ public class InventoryMenu extends JFrame {
 				String category = resultset.getString("category");
 				double price = resultset.getDouble("price");
 				int stock = resultset.getInt("stock");
+				String unit = resultset.getString("unit_type");
 
 				String status;
 				if (stock == 0) {
@@ -266,7 +290,7 @@ public class InventoryMenu extends JFrame {
 					status = "In Stock";
 				}
 
-				Object[] add = new Object[] { name, category, price, stock, status };
+				Object[] add = new Object[] { name, category, price, stock, unit, status };
 				tableModel.addRow(add);
 			}
 			logger.info("Inventory data loaded successfully.");
@@ -277,7 +301,7 @@ public class InventoryMenu extends JFrame {
 
 	private void openAddProductWindow() {
 		javax.swing.JDialog addDialog = new javax.swing.JDialog(this, "Add New Product", true);
-		addDialog.setSize(400, 350);
+		addDialog.setSize(400, 400);
 		addDialog.setLocationRelativeTo(this);
 		addDialog.setLayout(new java.awt.GridBagLayout());
 
@@ -320,21 +344,33 @@ public class InventoryMenu extends JFrame {
 		gbc.gridx = 1;
 		addDialog.add(stockField, gbc);
 
+		gbc.gridwidth = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		addDialog.add(new JLabel("Unit Type:"), gbc);
+
+		String[] unitOptions = { "pcs", "kg", "g", "L", "mL", "box", "meters" };
+		javax.swing.JComboBox<String> unitComboBox = new javax.swing.JComboBox<>(unitOptions);
+		gbc.gridx = 1;
+		addDialog.add(unitComboBox, gbc);
+
 		JLabel textLabel = new JLabel(" ");
 		textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 2;
 		addDialog.add(textLabel, gbc);
 
-		gbc.gridx = 0;
-		gbc.gridy = 6;
-		gbc.gridwidth = 2;
 		JButton saveProductButton = new JButton("Save Product");
 		saveProductButton.setBackground(darkGray);
 		saveProductButton.setForeground(Color.WHITE);
 		saveProductButton.setEnabled(true);
 		saveProductButton.setFocusPainted(false);
+
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		gbc.gridwidth = 2;
+		addDialog.add(saveProductButton, gbc);
 
 		// Input Listener to all Fields
 		DocumentListener fieldListener = new DocumentListener() {
@@ -402,6 +438,7 @@ public class InventoryMenu extends JFrame {
 			String category = categoryField.getText().trim();
 			String strPrice = priceField.getText().trim();
 			String strStock = stockField.getText().trim();
+			String selectedUnit = unitComboBox.getSelectedItem().toString();
 
 			// Array field to check
 			String[][] fieldsChecker = { { "Product Name", name }, { "Category", category }, { "Price", strPrice },
@@ -430,12 +467,13 @@ public class InventoryMenu extends JFrame {
 				// Save into Database
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
 						java.sql.PreparedStatement ps = connection.prepareStatement(
-								"INSERT INTO Products (product_name, category, price, stock) VALUES (?, ?, ?, ?)")) {
+								"INSERT INTO Products (product_name, category, price, stock, unit_type) VALUES (?, ?, ?, ?, ?)")) {
 
 					ps.setString(1, name);
 					ps.setString(2, category);
 					ps.setDouble(3, price);
 					ps.setInt(4, stock);
+					ps.setString(5, selectedUnit);
 					ps.executeUpdate();
 
 					logger.info("New product added: " + name);
@@ -596,9 +634,10 @@ public class InventoryMenu extends JFrame {
 		String oldCategory = tableModel.getValueAt(selectedRow, 1).toString();
 		String oldPrice = tableModel.getValueAt(selectedRow, 2).toString();
 		String oldStock = tableModel.getValueAt(selectedRow, 3).toString();
+		String oldUnit = tableModel.getValueAt(selectedRow, 4).toString();
 
 		javax.swing.JDialog editDialog = new javax.swing.JDialog(this, "Edit Product", true);
-		editDialog.setSize(400, 380);
+		editDialog.setSize(400, 400); // Matched size with Add Menu
 		editDialog.setLocationRelativeTo(this);
 		editDialog.setLayout(new java.awt.GridBagLayout());
 
@@ -630,7 +669,7 @@ public class InventoryMenu extends JFrame {
 
 		gbc.gridy = 3;
 		gbc.gridx = 0;
-		editDialog.add(new JLabel("Price (₱):"), gbc);
+		editDialog.add(new JLabel("Price (" + Main.currencySymbol + "):"), gbc);
 		JTextField priceField = new JTextField(oldPrice, 15);
 		gbc.gridx = 1;
 		editDialog.add(priceField, gbc);
@@ -642,14 +681,24 @@ public class InventoryMenu extends JFrame {
 		gbc.gridx = 1;
 		editDialog.add(stockField, gbc);
 
+		gbc.gridy = 5;
+		gbc.gridx = 0;
+		editDialog.add(new JLabel("Unit Type:"), gbc);
+
+		String[] unitOptions = { "pcs", "kg", "g", "L", "mL", "box", "meters" };
+		javax.swing.JComboBox<String> unitComboBox = new javax.swing.JComboBox<>(unitOptions);
+		unitComboBox.setSelectedItem(oldUnit); // Automatically select the old unit!
+		gbc.gridx = 1;
+		editDialog.add(unitComboBox, gbc);
+
 		JLabel textLabel = new JLabel(" ");
 		textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 6;
 		gbc.gridwidth = 2;
 		editDialog.add(textLabel, gbc);
 
-		gbc.gridy = 6;
+		gbc.gridy = 7;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		JButton updateProductButton = new JButton("Update Product");
@@ -658,16 +707,7 @@ public class InventoryMenu extends JFrame {
 		updateProductButton.setFocusPainted(false);
 		editDialog.add(updateProductButton, gbc);
 
-		String name = nameField.getText().trim();
-		String category = categoryField.getText().trim();
-		String strPrice = priceField.getText().trim();
-		String strStock = stockField.getText().trim();
-
-		if (name.isEmpty() || category.isEmpty() || strPrice.isEmpty() || strStock.isEmpty()) {
-			updateProductButton.setBackground(darkGray);
-		}
-
-		// Input Listener to all Fields
+		// Input Listener
 		DocumentListener fieldListener = new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) {
 				checkMatch();
@@ -691,23 +731,21 @@ public class InventoryMenu extends JFrame {
 				textLabel.setText(" ");
 
 				if (name.isEmpty() || category.isEmpty() || strPrice.isEmpty() || strStock.isEmpty()) {
-					return; // Return to original state
+					return;
 				}
 
 				try {
 					double price = Double.parseDouble(strPrice);
 					int stock = Integer.parseInt(strStock);
 
-					// Number rules
 					if (price <= 0) {
 						textLabel.setForeground(Color.RED);
 						textLabel.setText("Price must be greater than 0.");
 						return;
 					}
-
-					if (stock <= 0) {
+					if (stock < 0) { // Stock can be 0 on an edit!
 						textLabel.setForeground(Color.RED);
-						textLabel.setText("Initial stock must be greater than 0.");
+						textLabel.setText("Stock cannot be negative.");
 						return;
 					}
 
@@ -721,31 +759,26 @@ public class InventoryMenu extends JFrame {
 			}
 		};
 
-		// Add Listener to 4 fields
 		nameField.getDocument().addDocumentListener(fieldListener);
 		categoryField.getDocument().addDocumentListener(fieldListener);
 		priceField.getDocument().addDocumentListener(fieldListener);
 		stockField.getDocument().addDocumentListener(fieldListener);
 
 		updateProductButton.addActionListener(e -> {
-			String newName = nameField.getText();
-			String newCategory = categoryField.getText();
-			String newStrPrice = priceField.getText();
-			String newStrStock = stockField.getText();
+			String newName = nameField.getText().trim();
+			String newCategory = categoryField.getText().trim();
+			String newStrPrice = priceField.getText().trim();
+			String newStrStock = stockField.getText().trim();
+			String newUnit = unitComboBox.getSelectedItem().toString();
 
-			// Array field to check
 			String[][] fieldsChecker = { { "Product Name", newName }, { "Category", newCategory },
 					{ "Price", newStrPrice }, { "Stock", newStrStock } };
 
-			// Looping array to find the first blank field
 			for (int i = 0; i < fieldsChecker.length; i++) {
-				String fieldName = fieldsChecker[i][0];
-				String fieldValue = fieldsChecker[i][1];
-
-				if (fieldValue.isEmpty()) {
+				if (fieldsChecker[i][1].isEmpty()) {
 					textLabel.setForeground(Color.RED);
-					textLabel.setText(fieldName + " cannot be empty.");
-					return; // Stop the code right here until they fix it
+					textLabel.setText(fieldsChecker[i][0] + " cannot be empty.");
+					return;
 				}
 			}
 
@@ -753,20 +786,19 @@ public class InventoryMenu extends JFrame {
 				double newPrice = Double.parseDouble(newStrPrice);
 				int newStock = Integer.parseInt(newStrStock);
 
-				if (newPrice <= 0 || newStock < 0) {
+				if (newPrice <= 0 || newStock < 0)
 					return;
-				}
 
-				// 3. DATABASE UPDATE
 				try (java.sql.Connection connection = java.sql.DriverManager.getConnection(this.dbUrl);
 						java.sql.PreparedStatement preparedStatement = connection.prepareStatement(
-								"UPDATE Products SET product_name = ?, category = ?, price = ?, stock = ? WHERE product_name = ?")) {
+								"UPDATE Products SET product_name = ?, category = ?, price = ?, stock = ?, unit_type = ? WHERE product_name = ?")) {
 
 					preparedStatement.setString(1, newName);
 					preparedStatement.setString(2, newCategory);
 					preparedStatement.setDouble(3, newPrice);
 					preparedStatement.setInt(4, newStock);
-					preparedStatement.setString(5, oldName);
+					preparedStatement.setString(5, newUnit);
+					preparedStatement.setString(6, oldName);
 
 					preparedStatement.executeUpdate();
 
@@ -820,8 +852,7 @@ public class InventoryMenu extends JFrame {
 
 				for (int i = 0; i < selectedRows.length; i++) {
 
-					// IMPORTANT: Convert the table's visual row index back to the underlying
-					// model's data index!
+					// Converting the table's visual row index back
 
 					int modelRowIndex = inventoryTable.convertRowIndexToModel(selectedRows[i]);
 

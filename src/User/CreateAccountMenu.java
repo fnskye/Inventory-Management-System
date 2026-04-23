@@ -8,11 +8,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 // includes database connection
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 // includes the java swing gui
 import javax.swing.JButton;
@@ -30,6 +30,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import Database.InitializeDatabase;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
 
 public class CreateAccountMenu extends JDialog {
 
@@ -152,12 +154,13 @@ public class CreateAccountMenu extends JDialog {
 	}
 
 	private void registerNewUser() {
+
 		String newUsername = usernameField.getText();
-		String newPassword = new String(passwordField.getPassword());
-		String confirmPassword = new String(confirmPasswordField.getPassword());
+		char[] newPasswordCharacters = passwordField.getPassword();
+		char[] confirmPasswordCharacters = confirmPasswordField.getPassword();
 
 		// Checks if Username and Confirm Username Field are empty
-		if (newUsername.isEmpty() || newPassword.isEmpty()) {
+		if (newUsername.isEmpty() || newPasswordCharacters.length == 0) {
 			textLabel.setForeground(Color.RED);
 			textLabel.setText("Please fill in all fields.");
 			logger.info("Please fill in all fields.");
@@ -165,7 +168,7 @@ public class CreateAccountMenu extends JDialog {
 		}
 
 		// Checks if Password is not equal to Confirm Password
-		if (!newPassword.equals(confirmPassword)) {
+		if (!Arrays.equals(newPasswordCharacters, confirmPasswordCharacters)) {
 			return;
 		}
 
@@ -174,10 +177,19 @@ public class CreateAccountMenu extends JDialog {
 		try (Connection connection = InitializeDatabase.getConnection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+			// Secure Password Hashing
+			Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+
+			String securedPasswordHash = argon2.hash(3, 65536, 1, confirmPasswordCharacters);
+
 			// Initialize the first and second parameter index '?'
 			preparedStatement.setString(1, newUsername);
-			preparedStatement.setString(2, newPassword);
+			preparedStatement.setString(2, securedPasswordHash);
 			preparedStatement.executeUpdate();
+
+			// Wipe the password from memory
+			argon2.wipeArray(newPasswordCharacters);
+			argon2.wipeArray(confirmPasswordCharacters);
 
 			// Show message dialog for New Account Created
 			textLabel.setForeground(lightGreen);
