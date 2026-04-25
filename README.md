@@ -87,6 +87,39 @@ For launching the application for the first time, the SQLite database will autom
 
 ---
 
+---
+
+## Acknowledgements & Third-Party Licensing
+
+This software was made possible by the incredible work of the open-source community. The following third-party libraries and tools are integrated into this project:
+
+* **[Apache Log4j 2](https://logging.apache.org/log4j/2.x/)**
+  * **Use:** Core system event and error logging.
+  * **License:** [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  * *Copyright © The Apache Software Foundation.*
+
+* **[Argon2-JVM](https://github.com/phxql/argon2-jvm)**
+  * **Use:** Cryptographic password hashing and security.
+  * **License:** [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  * *Copyright © phxql and contributors.*
+
+* **[SQLite-JDBC](https://github.com/xerial/sqlite-jdbc)**
+  * **Use:** Local database management and SQL drivers.
+  * **License:** [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  * *Copyright © Taro L. Saito and contributors.*
+
+* **[JNA (Java Native Access)](https://github.com/java-native-access/jna)**
+  * **Use:** Required dependency for Argon2 native bindings.
+  * **License:** [Apache License 2.0 / LGPL](https://github.com/java-native-access/jna/blob/master/LICENSE)
+  * *Copyright © Timothy Wall and contributors.*
+
+* **[Launch4j](http://launch4j.sourceforge.net/)**
+  * **Use:** Executable (.exe) wrapper generation.
+  * **License:** [BSD / MIT](http://launch4j.sourceforge.net/docs.html#License)
+  * *Copyright © Grzegorz Kowal.*
+    
+---
+
 ## Development Team
 * **Timmalog, John Joshua L.** - Lead Developer / System Security & Architecture
 * **Frasco, Joshua Gabriel Q.** - Sales Report Module Developer
