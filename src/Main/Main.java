@@ -1,5 +1,7 @@
 package Main;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -40,7 +42,6 @@ public class Main {
 			Thread.sleep(50);
 			logger.info("Loading Global Settings...");
 			loadGlobalSettings();
-
 		} catch (Exception e) {
 			logger.error("Failed to load database.", e);
 		}
@@ -182,6 +183,86 @@ public class Main {
 		timer.start(); // Calls the timer for 1.5 seconds then run the logout dispose window
 
 		logoutDialog.setVisible(true); // Pauses the rest of the code from running until the dialog is closed
+	}
+
+	// Currency Changer
+	public static void openCurrencyWindow(JFrame parent, String username) throws InterruptedException {
+
+		Color lightGreen = new Color(0, 204, 102);
+
+		javax.swing.JDialog changeCurrencyDialog = new javax.swing.JDialog(parent, "Change Currency", true);
+		changeCurrencyDialog.setSize(300, 200);
+		changeCurrencyDialog.setLocationRelativeTo(parent);
+		changeCurrencyDialog.setLayout(new java.awt.GridBagLayout());
+
+		java.awt.GridBagConstraints gbc = new java.awt.GridBagConstraints();
+		gbc.insets = new java.awt.Insets(10, 10, 10, 10);
+		gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		changeCurrencyDialog.add(new javax.swing.JLabel("Select Currency:"), gbc);
+
+		// Currencies
+		String[] currencies = { "₱", "$", "€", "£", "¥" };
+		javax.swing.JComboBox<String> currencyBox = new javax.swing.JComboBox<>(currencies);
+
+		currencyBox.setSelectedItem(Main.currencySymbol);
+		gbc.gridy = 1;
+		changeCurrencyDialog.add(currencyBox, gbc);
+
+		javax.swing.JButton saveButton = new javax.swing.JButton("Save Settings");
+		saveButton.setBackground(lightGreen);
+		saveButton.setForeground(java.awt.Color.WHITE);
+		saveButton.setFocusPainted(false);
+		gbc.gridy = 2;
+		changeCurrencyDialog.add(saveButton, gbc);
+
+		saveButton.addActionListener(e -> {
+			String selected = currencyBox.getSelectedItem().toString();
+
+			// Update the Database so it remembers it forever
+			String dbUrl = "jdbc:sqlite:" + System.getProperty("user.dir") + "/database.db";
+			try (java.sql.Connection connection = java.sql.DriverManager.getConnection(dbUrl);
+					java.sql.PreparedStatement preparedstatement = connection
+							.prepareStatement("UPDATE Settings SET setting_value = ? WHERE setting_key = 'currency'")) {
+
+				preparedstatement.setString(1, selected);
+				preparedstatement.executeUpdate();
+
+				// Update the Global Variable in memory so it changes instantly
+				if (!(Main.currencySymbol.equals(selected))) {
+					Main.currencySymbol = selected;
+					javax.swing.JOptionPane.showMessageDialog(changeCurrencyDialog, "Currency updated to " + selected);
+					changeCurrencyDialog.dispose();
+
+					// Soft Reload Logic
+					String currentTitle = parent.getTitle(); // Check what menu we are currently looking at
+					parent.dispose(); // Destroy the old, outdated window
+
+					// Instantly boot up a fresh version of the exact same window
+					if (currentTitle.contains("Inventory")) {
+						new InventoryMenu(username).setVisible(true);
+					} else if (currentTitle.contains("Order")) {
+						new OrderMenu(username).setVisible(true);
+					} else if (currentTitle.contains("Sales")) {
+						new SalesReport(username).setVisible(true);
+					} else {
+						new MainMenu(username).setVisible(true);
+					}
+				} else {
+					logger.error(selected, " is already the Global Currency Symbol.");
+					javax.swing.JOptionPane.showMessageDialog(changeCurrencyDialog,
+							selected + " is already the Global Currency Symbol.");
+					return;
+				}
+
+			} catch (Exception ex) {
+				logger.error("Error saving settings.", ex);
+				javax.swing.JOptionPane.showMessageDialog(changeCurrencyDialog, "Error saving settings.");
+			}
+		});
+		changeCurrencyDialog.setVisible(true);
 	}
 
 	public static void loadGlobalSettings() {
