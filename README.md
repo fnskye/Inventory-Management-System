@@ -87,8 +87,6 @@ For launching the application for the first time, the SQLite database will autom
 
 ---
 
----
-
 ## Acknowledgements & Third-Party Licensing
 
 This software was made possible by the incredible work of the open-source community. The following third-party libraries and tools are integrated into this project:
