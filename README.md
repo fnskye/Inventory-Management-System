@@ -34,7 +34,7 @@ cd "C:\path\to\your\eclipse-workspace"
 ```
 Next, download the source code by cloning the repository:
 ```bash
-git clone "https://github.com/fnskye/Inventory-Management-System.git" AutomatedInventoryManagementSystem
+git clone "https://github.com/fnskye/Inventory-Management-System/" AutomatedInventoryManagementSystem
 ```
 *(If prompted, log in to GitHub to authenticate the connection).*
 
