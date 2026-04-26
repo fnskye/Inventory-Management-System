@@ -118,9 +118,9 @@ This software was made possible by the incredible work of the open-source commun
     
 ---
 
-## Development Team
-* **Timmalog, John Joshua L.** - Lead Developer / System Security & Architecture
-* **Frasco, Joshua Gabriel Q.** - Sales Report Module Developer
-* **Julongbayan, Dale Andre A.** - Inventory & Order Module Developer
-* **Santos, Alexis Andrie C.** - Main Menu & UI Dashboard Designer
-* **Suyo, Hadrian Kendrick S.** - Billing Invoice & Receipt Engine Developer
+## Development Team and Contributions
+* [**Timmalog, John Joshua L.**](https://github.com/fnskye) - Lead Developer / System Security & Architecture
+* [**Frasco, Joshua Gabriel Q.**](https://github.com/qjgfrasco-ux) - Sales Report Module Developer
+* [**Julongbayan, Dale Andre A.**](https://github.com/Zyphfour) - Inventory & Order Module Developer
+* [**Santos, Alexis Andrie C.**](https://github.com/Z07-andriealexis) - Main Menu & UI Dashboard Designer
+* [**Suyo, Hadrian Kendrick S.**](https://github.com/kksuyo) - Billing Invoice & Receipt Developer
